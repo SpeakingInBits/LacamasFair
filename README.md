@@ -10,6 +10,6 @@ Website revamp project for Lacamas Fair
 # How to contribute 
 - Create a new branch *(Don't commit directly to master)*
 - Assign yourself to the issue
-- Make a pull request
+- Make a pull request *(Note the issue you're closing in the pull request description)*
 - Code Review *(Someone else has to review your code)*
 - Pull Request checks must pass to have your code accepted
