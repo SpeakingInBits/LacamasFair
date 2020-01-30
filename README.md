@@ -13,3 +13,7 @@ Website revamp project for Lacamas Fair
 - Make a pull request *(Note the issue you're closing in the pull request description)*
 - Code Review *(Someone else has to review your code)*
 - Pull Request checks must pass to have your code accepted
+
+# Coding Style Guidelines
+- Project should follow standard Microsoft recommended C# .NET coding conventions<br />
+[See Microsoft Docs](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions)
