@@ -1,5 +1,6 @@
 # LacamasFair
-Website revamp project for Lacamas Fair
+Website revamp project for Lacamas Fair<br />
+[Original Website](http://lacamasfair.org/)
 
 # Getting Started
 - Must have Visual Studio 2019+ and ASP.NET Core 3.1.X installed
