@@ -4,7 +4,7 @@ Website revamp project for Lacamas Fair<br />
 
 # Getting Started
 - Must have [Visual Studio 2019+](https://visualstudio.microsoft.com/) 
-and [ASP.NET Core 3.1.X](https://visualstudio.microsoft.com/) installed
+and [ASP.NET Core 3.1.X](https://dotnet.microsoft.com/download/dotnet-core/3.1) installed
 - Clone/Download this repository onto your machine
 - Open the .sln file
 - Once you have the project launched, click the IIS Express button at the top of Visual Studio Editor to run the website
