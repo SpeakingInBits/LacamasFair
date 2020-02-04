@@ -1,3 +1,5 @@
+![.NET Core CI Build](https://github.com/SpeakingInBits/LacamasFair/workflows/.NET%20Core%20CI%20Build/badge.svg)
+
 # LacamasFair
 Website revamp project for Lacamas Fair<br />
 [Original Website](http://lacamasfair.org/)
