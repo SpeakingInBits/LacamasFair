@@ -23,6 +23,11 @@ namespace LacamasFair.Controllers
             return View();
         }
 
+        public IActionResult AboutPage() 
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
