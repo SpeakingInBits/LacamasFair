@@ -23,12 +23,22 @@ namespace LacamasFair.Controllers
             return View();
         }
 
-        public IActionResult AboutPage() 
+        public IActionResult HistoryAndGoal() 
+        {
+            return View();
+        }
+
+        public IActionResult FairBoard() 
         {
             return View();
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult FacilityRental()
         {
             return View();
         }
