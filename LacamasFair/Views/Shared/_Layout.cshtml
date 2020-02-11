@@ -26,13 +26,17 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="HistoryAndGoal">About Us</a>
                         </li>
                         <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="FacilityRental"> Facility Rental</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="FacilityRental">Facility Rental</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CommunityCenter">Community Center</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="DepartmentHome">Department Home</a>
+                        </li>
+                        @* Keep the privacy nav-link at the bottom, so it appears at the end when all of the other navigation links are implemented *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
