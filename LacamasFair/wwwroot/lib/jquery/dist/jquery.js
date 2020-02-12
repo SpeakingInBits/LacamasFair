@@ -10361,4 +10361,4 @@ if ( !noGlobal ) {
 
 
 return jQuery;
-} );
+});

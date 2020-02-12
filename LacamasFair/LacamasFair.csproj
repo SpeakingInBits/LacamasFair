@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-LacamasFair-588BC50C-8F84-443E-9FA5-EED84CC696CC</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="wwwroot\JQueryMobile\jquery.min.js" />
+    <None Remove="wwwroot\JQueryMobile\jquery.min.map" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
