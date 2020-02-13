@@ -6,43 +6,44 @@
     <title>@ViewData["Title"] - Lacamas Fair</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/color-css/color.css" />
 </head>
-<body>
+<body class="background text-white">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LacamasFair</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="HistoryAndGoal">About Us</a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="FacilityRental">Facility Rental</a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CommunityCenter">Community Center</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="DepartmentHome">Department Home</a>
-                        </li>
-                        @* Keep the privacy nav-link at the bottom, so it appears at the end when all of the other navigation links are implemented *@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+        <nav class="background-dark navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="text-white" asp-area="" asp-controller="Home" asp-action="Index">LacamasFair</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <partial name="_LoginPartial" />
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="HistoryAndGoal">About Us</a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="FacilityRental">Facility Rental</a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="CommunityCenter">Community Center</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Department" asp-action="DepartmentHome">Department Home</a>
+                            </li>
+                            @* Keep the privacy nav-link at the bottom, so it appears at the end when all of the other navigation links are implemented *@
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
+            </nav>
+</header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
