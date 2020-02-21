@@ -28,13 +28,13 @@ namespace LacamasFair.Models
         /// Department description (This is the animal department, etc etc)
         /// </summary>
         [StringLength(60)]
-        public String SubDeptName { get; set; }
+        public string SubDeptName { get; set; }
 
         /// <summary>
         /// Text of Fair Entry rules that should be able to be updated by admin
         /// </summary>
         [StringLength(1000)]
-        public String FairEntryRules { get; set; }
+        public string FairEntryRules { get; set; }
 
         /// <summary>
         /// Classes should store information about current available department classes
