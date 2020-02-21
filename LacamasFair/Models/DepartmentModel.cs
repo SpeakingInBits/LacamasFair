@@ -8,7 +8,6 @@ namespace LacamasFair.Models
 {
     public class DepartmentModel
     {
-
         /// <summary>
         /// This is the primary key that connects to ParentDept in the SubDept class.
         /// </summary>
@@ -21,8 +20,6 @@ namespace LacamasFair.Models
         /// </summary>
         [Required]
         [StringLength(75)]
-        public string DepartmenName { get; set; }
-
-
+        public string DepartmentName { get; set; }
     }
 }
