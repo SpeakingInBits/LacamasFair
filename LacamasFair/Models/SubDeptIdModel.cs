@@ -41,7 +41,5 @@ namespace LacamasFair.Models
         /// </summary>
         [StringLength(750)]
         public int DeptClasses { get; set; }
-
-
     }
 }
