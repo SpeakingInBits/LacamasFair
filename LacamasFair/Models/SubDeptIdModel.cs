@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,14 +15,17 @@ namespace LacamasFair.Models
         /// Unique id for the Department Number
         /// </summary>
         [Key]
+        [Column(Order = 1)]
         [Required]
         public int SubDeptId { get; set; }
 
         /// <summary>
         /// Foreign Key, that links to DepartmentName primary table
         /// </summary>
+        [ForeignKey("DepartmentModel")]
+        [Column(Order = 2)]
         [Required(ErrorMessage = "A Department name is required")]
-        public string ParentDept { get; set; }
+        public string DepartmentName { get; set; }
 
 
         /// <summary>

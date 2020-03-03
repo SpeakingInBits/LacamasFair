@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,8 +12,8 @@ namespace LacamasFair.Models
         /// <summary>
         /// Unique id for the Department Number
         /// </summary>
-        [Key]
-        [Required]
+        [ForeignKey("SubDeptIdModel")]
+        [Column(Order = 1)]
         public int SubDeptId { get; set; }
 
         /// <summary>
