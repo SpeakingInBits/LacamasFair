@@ -15,6 +15,7 @@ namespace LacamasFair.Models
         [Key]
         [ForeignKey("SubDeptIdModel")]
         [Column(Order = 1)]
+        [Required]
         public int SubDeptId { get; set; }
 
         /// <summary>
