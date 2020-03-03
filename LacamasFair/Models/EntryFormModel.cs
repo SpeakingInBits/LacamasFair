@@ -12,6 +12,7 @@ namespace LacamasFair.Models
         /// <summary>
         /// Unique id for the Department Number
         /// </summary>
+        [Key]
         [ForeignKey("SubDeptIdModel")]
         [Column(Order = 1)]
         public int SubDeptId { get; set; }
