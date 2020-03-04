@@ -20,6 +20,8 @@ namespace LacamasFair.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             //SubDeptIdModel (DepartmentId property) -> DepartmentModel (DepartmentId property)
             modelBuilder.Entity<SubDeptIdModel>() //The dependent entity
                         .HasOne<DepartmentModel>() //The principal entity
