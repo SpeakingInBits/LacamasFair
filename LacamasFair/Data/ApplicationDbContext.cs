@@ -20,11 +20,11 @@ namespace LacamasFair.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //SubDeptIdModel (DepartmentName property) -> DepartmentModel (DepartmentName property)
+            //SubDeptIdModel (DepartmentId property) -> DepartmentModel (DepartmentId property)
             modelBuilder.Entity<SubDeptIdModel>() //The dependent entity
                         .HasOne<DepartmentModel>() //The principal entity
                         .WithMany()
-                        .HasForeignKey(subDepartments => subDepartments.DepartmentName); //The foreign key that you want to set up as from the SubDeptIdModel class
+                        .HasForeignKey(subDepartments => subDepartments.DepartmentId); //The foreign key that you want to set up as from the SubDeptIdModel class
 
             //EntryFormModel (SubDeptId property) -> SubDeptIdModel (SubDeptId property)
             modelBuilder.Entity<EntryFormModel>()
