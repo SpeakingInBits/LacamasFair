@@ -21,7 +21,7 @@ namespace LacamasFair.Models
         /// Foreign Key, that links to DepartmentModel's DepartmentId property (The parent department)
         /// </summary>
         [Required(ErrorMessage = "A Department name is required")]
-        public string DepartmentId { get; set; }
+        public int DepartmentId { get; set; }
 
 
         /// <summary>
