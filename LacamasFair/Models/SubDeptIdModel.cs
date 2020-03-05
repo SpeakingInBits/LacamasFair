@@ -18,10 +18,10 @@ namespace LacamasFair.Models
         public int SubDeptId { get; set; }
 
         /// <summary>
-        /// Foreign Key, that links to DepartmentName primary table
+        /// Foreign Key, that links to DepartmentModel's DepartmentId property (The parent department)
         /// </summary>
         [Required(ErrorMessage = "A Department name is required")]
-        public string ParentDept { get; set; }
+        public int DepartmentId { get; set; }
 
 
         /// <summary>
