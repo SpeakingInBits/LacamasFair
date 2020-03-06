@@ -8,7 +8,7 @@ namespace LacamasFair.Controllers
 {
     public class DepartmentController : Controller
     {
-        public IActionResult DepartmentHome()
+        public IActionResult Home()
         {
             return View();
         }
