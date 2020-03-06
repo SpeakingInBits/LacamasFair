@@ -3,10 +3,13 @@
 }
 
 .accent {
-	background-color: #9DDB5A;
-	color: white;
+	color: #9DDB5A !important;
 }
 
 .background-dark {
 	background-color: #3D4954;
+}
+
+.nav-item > a.nav-link, a {
+	color: #9DDB5A !important;
 }
