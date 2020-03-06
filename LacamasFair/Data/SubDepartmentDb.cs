@@ -69,7 +69,7 @@ namespace LacamasFair.Data.Migrations
         {
             SubDeptIdModel model = new SubDeptIdModel()
             { 
-                SubDeptId = id
+                SubDeptId = subId
             };
             context.Entry(model).State = EntityState.Deleted;
             await context.SaveChangesAsync();
