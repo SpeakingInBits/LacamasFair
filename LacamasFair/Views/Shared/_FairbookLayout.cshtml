@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<partial name="_Head.cshtml" />
+<body class="background text-white">
+    <header>
+        <nav class="background-dark navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="text-white" asp-area="" asp-controller="Home" asp-action="Index">LacamasFair</a>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Return to Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Department" asp-action="Index">Home Economics Departments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Department" asp-action="Index">Horticulture Departments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Department" asp-action="Index">Animal Departments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Department" asp-action="Index">Expressive Arts Departments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Department" asp-action="Index">Misc. Departments and Activites</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <partial name="_FooterScripts.cshtml" />
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
