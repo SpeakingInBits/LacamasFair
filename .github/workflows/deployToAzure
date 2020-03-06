@@ -1,0 +1,35 @@
+name: Deploy to Azure
+
+on:
+  release:
+    types: [published] # https://help.github.com/en/actions/reference/events-that-trigger-workflows#release-event-release
+
+jobs:
+  build and deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+    - name: Azure WebApp Deploy
+      uses: Azure/webapps-deploy@v2
+      with:
+        # Name of the Azure Web App
+        app-name: lacamasfair
+        # Applies to Web App only: Publish profile (*.publishsettings) file contents with Web Deploy secrets
+        publish-profile: ${{ secrets.publish_profile }}
+        # Enter an existing Slot other than the Production slot
+        # slot-name: # optional, default is production
+        # Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a folder to deploy
+        # package: # optional, default is .
+        # Enter the start up command. For ex. dotnet run or dotnet run
+        startup-command: |
+          dotnet run
+          dotnet ef database update
+    
