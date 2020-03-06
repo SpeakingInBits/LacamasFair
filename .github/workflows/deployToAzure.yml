@@ -31,7 +31,4 @@ jobs:
         # Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a folder to deploy
         package: './dotnetcorewebapp'
         # Enter the start up command. For ex. dotnet run or dotnet run
-        startup-command: |
-          dotnet run
-          dotnet ef database update
-    
+        # startup-command:
