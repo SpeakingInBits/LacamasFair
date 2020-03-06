@@ -5,7 +5,7 @@ on:
     types: [published] # https://help.github.com/en/actions/reference/events-that-trigger-workflows#release-event-release
 
 jobs:
-  build and deploy:
+  build-and-deploy:
 
     runs-on: ubuntu-latest
 
