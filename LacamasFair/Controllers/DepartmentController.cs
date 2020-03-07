@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using LacamasFair.Data;
 using LacamasFair.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LacamasFair.Controllers
 {
+    [Authorize(IdentityHelper.Administrator)]
     public class DepartmentController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -17,6 +19,7 @@ namespace LacamasFair.Controllers
             _context = context;
         }
 
+        [AllowAnonymous] // Anybody can view the departments
         public IActionResult Home()
         {
             return View();

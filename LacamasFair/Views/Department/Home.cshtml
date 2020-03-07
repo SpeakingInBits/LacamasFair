@@ -17,7 +17,7 @@
 </div>
 
 @* If the user that is signed in is an admin, display an add link for them to be able to add departments to the database *@
-@if (User.IsInRole("Administrator"))
+@if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator))
 {
     <a asp-action="AddDepartment" asp-controller="Department">Add Department</a>
 }
