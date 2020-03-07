@@ -30,7 +30,8 @@ namespace LacamasFair
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(IdentityHelper.SetIdentityConfigOptions)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -65,6 +66,18 @@ namespace LacamasFair
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            var provider = app.ApplicationServices
+                .GetRequiredService<IServiceProvider>()
+                .CreateScope();
+
+            string[] allRoles =
+            {
+                IdentityHelper.Administrator
+            };
+
+            IdentityHelper.CreateRoles(provider.ServiceProvider, allRoles).Wait();
+            IdentityHelper.SeedUsers(provider.ServiceProvider, IdentityHelper.Administrator).Wait();
         }
     }
 }
