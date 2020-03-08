@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "Home";
+    Layout = "/Views/Shared/_FairbookLayout.cshtml";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        @TempData["Message"]
+    </div>
+}
+
+<div class="text-center">
+    <h1>Welcome To Departments</h1>
+</div>
+
+@* If the user that is signed in is an admin, display an add link for them to be able to add departments to the database *@
+@if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator))
+{
+    <a asp-action="AddDepartment" asp-controller="Department">Add Department</a>
+}
+
+@* TODO: Display the correct information based what department is clicked on in the nav-link *@

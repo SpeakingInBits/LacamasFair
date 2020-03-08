@@ -9,7 +9,7 @@ namespace LacamasFair.Data
 {
     public static class IdentityHelper
     {
-        internal static readonly string Administrator = "Administrator";
+        public const string Administrator = "Administrator";
 
         /// <summary>
         /// Creates roles for IdentityRole

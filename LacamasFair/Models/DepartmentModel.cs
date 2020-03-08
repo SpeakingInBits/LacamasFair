@@ -20,6 +20,7 @@ namespace LacamasFair.Models
         /// </summary>
         [Required]
         [StringLength(75)]
+        [Display(Name = "Department Name")]
         public string DepartmentName { get; set; }
     }
 }

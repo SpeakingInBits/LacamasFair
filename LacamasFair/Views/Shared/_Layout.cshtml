@@ -1,13 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Lacamas Fair</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/color-css/color.css" />
-</head>
+<partial name="_Head.cshtml" />
 <body class="background text-white">
     <header>
         <nav class="background-dark navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
@@ -32,7 +25,7 @@
                                 <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="CommunityCenter">Community Center</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Department" asp-action="DepartmentHome">Department Home</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Department" asp-action="Home">Departments</a>
                             </li>
                             @* Keep the privacy nav-link at the bottom, so it appears at the end when all of the other navigation links are implemented *@
                             <li class="nav-item">
@@ -48,16 +41,7 @@
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container text-white">
-            &copy; @DateTime.Today.Year - LacamasFair - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/JQueryMobile/jquerymobile.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <partial name="_FooterScripts.cshtml" />
     @RenderSection("Scripts", required: false)
 </body>
 </html>
