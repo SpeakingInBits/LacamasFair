@@ -20,8 +20,18 @@ namespace LacamasFair.Controllers
         }
 
         [AllowAnonymous] // Anybody can view the departments
-        public IActionResult Home()
+        public async Task<IActionResult> Home(int id)
         {
+            List<DepartmentModel> departments = await DepartmentDb.GetAllDepartments(_context);
+            string departmentName = "";
+            foreach (DepartmentModel item in departments) 
+            {
+                if (item.DepartmentId == id) 
+                {
+                    departmentName = item.DepartmentName;
+                }
+            }
+            ViewData["DepartmentName"] = departmentName;
             return View();
         }
 
