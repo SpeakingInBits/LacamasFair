@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Home";
     Layout = "/Views/Shared/_FairbookLayout.cshtml";
 }
@@ -12,14 +11,14 @@
     </div>
 }
 
-<div class="text-center">
-    <h1>Welcome To Departments</h1>
-</div>
-
 @* If the user that is signed in is an admin, display an add link for them to be able to add departments to the database *@
 @if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator))
 {
     <a asp-action="AddDepartment" asp-controller="Department">Add Department</a>
 }
+
+<div class="text-center">
+    <h1>Welcome To @ViewData["DepartmentName"] Department</h1>
+</div>
 
 @* TODO: Display the correct information based what department is clicked on in the nav-link *@
