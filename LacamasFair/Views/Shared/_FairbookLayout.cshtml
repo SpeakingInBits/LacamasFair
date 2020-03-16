@@ -24,7 +24,7 @@
                         @foreach (DepartmentModel item in departments)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Department" asp-action="" asp-route-id="@item.DepartmentId">@item.DepartmentName</a>
+                                <a class="nav-link text-white" asp-controller="Department" asp-action="Home" asp-route-id="@item.DepartmentId">@item.DepartmentName</a>
                             </li>
                         }
                     </ul>
