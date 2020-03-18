@@ -63,8 +63,8 @@ namespace LacamasFair.Data.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DeptClasses")
-                        .HasColumnType("int")
+                    b.Property<string>("DeptClasses")
+                        .HasColumnType("nvarchar(750)")
                         .HasMaxLength(750);
 
                     b.Property<string>("FairEntryRules")
@@ -72,6 +72,7 @@ namespace LacamasFair.Data.Migrations
                         .HasMaxLength(1000);
 
                     b.Property<string>("SubDeptName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(60)")
                         .HasMaxLength(60);
 
