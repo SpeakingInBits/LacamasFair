@@ -55,7 +55,8 @@ namespace LacamasFair.Data
         /// <param name="department">The Department Model</param>
         public static async Task<DepartmentModel> UpdateDepartment(ApplicationDbContext context, DepartmentModel department)
         {
-            context.Update(department);
+            await context.AddAsync(department);
+            context.Entry(department).State = EntityState.Modified;
             await context.SaveChangesAsync();
             return department;
         }
@@ -65,13 +66,10 @@ namespace LacamasFair.Data
         /// </summary>
         /// <param name="context"The Application Context></param>
         /// <param name="id">The Department Id</param>
-        public static async Task DeleteDepartmentById(ApplicationDbContext context, int id)
+        public static async Task DeleteDepartment(ApplicationDbContext context, DepartmentModel department)
         {
-            DepartmentModel model = new DepartmentModel()
-            {
-                DepartmentId = id
-            };
-            context.Entry(model).State = EntityState.Deleted;
+            await context.AddAsync(department);
+            context.Entry(department).State = EntityState.Deleted;
             await context.SaveChangesAsync();
         }
     }
