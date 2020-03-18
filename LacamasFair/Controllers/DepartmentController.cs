@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LacamasFair.Data;
+using LacamasFair.Data.Migrations;
 using LacamasFair.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,7 @@ namespace LacamasFair.Controllers
                 }
             }
             ViewData["DepartmentName"] = departmentName;
+            ViewData["id"] = id;
             return View();
         }
 
@@ -51,34 +53,39 @@ namespace LacamasFair.Controllers
                 return RedirectToAction(nameof(Home));
             }
             return View();
-
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id) 
+        public async Task<IActionResult> EditDepartment(int? id) 
         {
-            DepartmentModel department = await DepartmentDb.GetDepartmentById(_context, id);
-            if (department == null) 
+            if (id == null)
             {
+                //HTTP 400
+                return BadRequest();
+            }
+            DepartmentModel department = await DepartmentDb.GetDepartmentById(_context, id.Value);
+            if (department == null)
+            {
+                //Returns an HTTP 404 - Not Found Error
                 return NotFound();
             }
             return View(department);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(DepartmentModel department) 
+        public async Task<IActionResult> EditDepartment(DepartmentModel department) 
         {
             if (ModelState.IsValid) 
             {
                 await DepartmentDb.UpdateDepartment(_context, department);
-                ViewData["Message"] = $"{department.DepartmentName} added successfully";
-                return View(department);
+                TempData["Message"] = $"{department.DepartmentName} edited successfully";
+                return RedirectToAction(nameof(Home));
             }
             return View(department);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int id) 
+        public async Task<IActionResult> DeleteDepartment(int id) 
         {
             DepartmentModel department = await DepartmentDb.GetDepartmentById(_context, id);
             if (department == null) 
@@ -88,13 +95,31 @@ namespace LacamasFair.Controllers
             return View(department);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteDepartment")]
         public async Task<IActionResult> DeleteConfirmed(int id) 
         {
             DepartmentModel department = await DepartmentDb.GetDepartmentById(_context, id);
-            await DepartmentDb.DeleteDepartmentById(_context, id);
+            await DepartmentDb.DeleteDepartment(_context, department);
             TempData["Message"] = $"{department.DepartmentName} department deleted successfully";
             return RedirectToAction(nameof(Home));
+        }
+
+        public IActionResult AddSubDepartment(int id)
+        {
+            ViewData["id"] = id;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddSubDepartment(SubDeptIdModel subDepartment)
+        {
+            if (ModelState.IsValid)
+            {
+                await SubDepartmentDb.AddSubDepartment(_context, subDepartment);
+                TempData["Message"] = $"{subDepartment.SubDeptName} department added successfully";
+                return RedirectToAction(nameof(Home));
+            }
+            return View();
         }
     }
 }
