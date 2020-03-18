@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LacamasFair.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200305035519_AddedDepartmentsAndEntryFormDb")]
-    partial class AddedDepartmentsAndEntryFormDb
+    [Migration("20200318191945_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,8 +65,8 @@ namespace LacamasFair.Data.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DeptClasses")
-                        .HasColumnType("int")
+                    b.Property<string>("DeptClasses")
+                        .HasColumnType("nvarchar(750)")
                         .HasMaxLength(750);
 
                     b.Property<string>("FairEntryRules")
@@ -74,6 +74,7 @@ namespace LacamasFair.Data.Migrations
                         .HasMaxLength(1000);
 
                     b.Property<string>("SubDeptName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(60)")
                         .HasMaxLength(60);
 
