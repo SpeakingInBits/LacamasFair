@@ -1,4 +1,12 @@
-﻿@{
+﻿@using LacamasFair.Data
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor http
+@inject ApplicationDbContext context
+@{
+    List<DepartmentModel> departments = await DepartmentDb.GetAllDepartments(context);
+}
+
+@{
     ViewData["Title"] = "Home";
     Layout = "/Views/Shared/_FairbookLayout.cshtml";
 }
@@ -11,14 +19,66 @@
     </div>
 }
 
-@* If the user that is signed in is an admin, display an add link for them to be able to add departments to the database *@
-@if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator))
+@* If the user that is signed in is an admin, display an add/edit link for them to be able to add/edit departments to the database *@
+@if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator) && (int)ViewData["id"] == 0)
 {
-    <a asp-action="AddDepartment" asp-controller="Department">Add Department</a>
+    <div class="btn-toolbar" style="margin-left: 27%">
+        @* Link to add a department to the nav-bar *@
+        <a class="btn btn-primary btn-group mr-2 text-dark" asp-action="AddDepartment" asp-controller="Department">Add Department</a>
+
+        @* Dropdown link to edit a selected department *@
+        <div class="dropdown btn-group mr-2">
+            <button class="btn btn-warning dropdown-toggle text-dark" type="button" id="dropdownEditButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Edit Department
+            </button>
+            <div class="dropdown-menu background-dark" aria-labelledby="dropdownEditButton">
+                @foreach (DepartmentModel item in departments)
+                {
+                    <a class="dropdown-item" asp-action="EditDepartment" asp-route-id="@item.DepartmentId">@item.DepartmentName</a>
+                }
+            </div>
+        </div>
+
+        @* Dropdown link to delete a selected department *@
+        <div class="dropdown btn-group mr-2">
+            <button class="btn btn-danger dropdown-toggle text-dark" type="button" id="dropdownDeleteButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Delete Department
+            </button>
+            <div class="dropdown-menu background-dark" aria-labelledby="dropdownDeleteButton">
+                @foreach (DepartmentModel item in departments)
+                {
+                    <a class="dropdown-item" asp-action="DeleteDepartment" asp-route-id="@item.DepartmentId">@item.DepartmentName</a>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@* If the user clicks on a department, display a delete department and add sub department link for them *@
+@if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator) && (int)ViewData["id"] > 0)
+{
+    <a class="btn btn-primary" asp-action="AddSubDepartment" asp-controller="Department" asp-route-id="@ViewData["id"]">Add Sub Department</a>
 }
 
 <div class="text-center">
     <h1>Welcome To @ViewData["DepartmentName"] Department</h1>
 </div>
 
-@* TODO: Display the correct information based what department is clicked on in the nav-link *@
+@* TODO (in progress below): Display the correct information based what department is clicked on in the nav-link *@
+
+@* TODO: Display the sub departments of that department *@
+
+@* If ViewData["DepartmentName"] is the same id as Home Economics, display this information *@
+
+@* If ViewData["DepartmentName"] is the same id as Animal, display this information *@
+
+@* If ViewData["DepartmentName"] is the same id as Expressive Arts, display this information *@
+
+@* If ViewData["DepartmentName"] is the same id as Misc., display this information *@
+
+@*
+    Note:
+    When a user clicks on a department, display all of it's sub departments.
+    When a user clicks on a sub department, display all of it's classes as a pop up button that shows it's entry rules.
+    Use "Accordion Example" from this link: https://getbootstrap.com/docs/4.4/components/collapse/
+*@
