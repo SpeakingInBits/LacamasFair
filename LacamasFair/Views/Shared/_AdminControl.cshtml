@@ -1,0 +1,48 @@
+﻿@using LacamasFair.Data
+@model DepartmentModel
+@inject IHttpContextAccessor http
+@inject ApplicationDbContext context
+@{
+    List<DepartmentModel> departments = await DepartmentDb.GetAllDepartments(context);
+}
+
+@* If the user that is signed in is an admin, display an add/edit link for them to be able to add/edit departments to the database *@
+@if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator) && (int)ViewData["id"] == 0)
+{
+    <div class="btn-toolbar" style="margin-left: 27%">
+        @* Link to add a department to the nav-bar *@
+        <a class="btn btn-primary btn-group mr-2 text-dark" asp-action="AddDepartment" asp-controller="Department">Add Department</a>
+
+        @* Dropdown link to edit a selected department *@
+        <div class="dropdown btn-group mr-2">
+            <button class="btn btn-warning dropdown-toggle text-dark" type="button" id="dropdownEditButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Edit Department
+            </button>
+            <div class="dropdown-menu background-dark" aria-labelledby="dropdownEditButton">
+                @foreach (DepartmentModel item in departments)
+                {
+                    <a class="dropdown-item" asp-action="EditDepartment" asp-route-id="@item.DepartmentId">@item.DepartmentName</a>
+                }
+            </div>
+        </div>
+
+        @* Dropdown link to delete a selected department *@
+        <div class="dropdown btn-group mr-2">
+            <button class="btn btn-danger dropdown-toggle text-dark" type="button" id="dropdownDeleteButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Delete Department
+            </button>
+            <div class="dropdown-menu background-dark" aria-labelledby="dropdownDeleteButton">
+                @foreach (DepartmentModel item in departments)
+                {
+                    <a class="dropdown-item" asp-action="DeleteDepartment" asp-route-id="@item.DepartmentId">@item.DepartmentName</a>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@* If the user clicks on a department, display a delete department and add sub department link for them *@
+@if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator) && (int)ViewData["id"] > 0)
+{
+    <a class="btn btn-primary" asp-action="AddSubDepartment" asp-controller="Department" asp-route-id="@Model.DepartmentId">Add Sub Department</a>
+}
