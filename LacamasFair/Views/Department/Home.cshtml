@@ -1,7 +1,12 @@
-﻿@model DepartmentModel
+﻿@using LacamasFair.Data
+@model DepartmentModel
+@*@inject ApplicationDbContext context
+@{
+    List<SubDeptIdModel> subDepartments = await SubDepartmentDb.GetAllSubDepartments(context);
+}*@
 
 @{
-    ViewData["Title"] = "Home";
+ViewData["Title"] = "Home";
     Layout = "/Views/Shared/_FairbookLayout.cshtml";
 }
 
@@ -24,13 +29,18 @@
 
 @* TODO: Display the sub departments of that department *@
 
-@* If ViewData["DepartmentName"] is the same id as Home Economics, display this information *@
-
-@* If ViewData["DepartmentName"] is the same id as Animal, display this information *@
-
-@* If ViewData["DepartmentName"] is the same id as Expressive Arts, display this information *@
-
-@* If ViewData["DepartmentName"] is the same id as Misc., display this information *@
+@* If one of the departments are clicked, show its sub departments *@
+@if ((int)ViewData["id"] > 0)
+{
+    @foreach (SubDeptIdModel item in ViewBag.SubDepartments) 
+    {
+        //If the user clicks a department in the nav link, only show the sub departments tied to it
+        @if (Model.DepartmentId == item.DepartmentId) 
+        {
+            <a class="btn btn-success btn-group mr-2 text-dark" asp-action="Home" asp-controller="Department">@item.SubDeptName</a>        
+        }
+    }
+}
 
 @*
     Note:

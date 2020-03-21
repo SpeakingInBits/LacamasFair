@@ -30,6 +30,9 @@ namespace LacamasFair.Controllers
 
             //Grab that department with the correct id passed to model bind to the add sub department link
             DepartmentModel dept = await DepartmentDb.GetDepartmentById(_context, id);
+
+            ViewBag.SubDepartments = await SubDepartmentDb.GetAllSubDepartments(_context);
+
             return View(dept);
         }
 
@@ -135,7 +138,7 @@ namespace LacamasFair.Controllers
             if (ModelState.IsValid)
             {
                 await SubDepartmentDb.AddSubDepartment(_context, subDepartment);
-                TempData["Message"] = $"{subDepartment.SubDeptName} department added successfully";
+                TempData["Message"] = $"{subDepartment.SubDeptName} sub department added successfully";
                 return RedirectToAction(nameof(Home));
             }
             return View();
