@@ -1,6 +1,5 @@
 ﻿@using LacamasFair.Data
 @model DepartmentModel
-@inject IHttpContextAccessor http
 @inject ApplicationDbContext context
 @{
     List<DepartmentModel> departments = await DepartmentDb.GetAllDepartments(context);
