@@ -1,5 +1,6 @@
 ﻿@using LacamasFair.Data
 @using Microsoft.AspNetCore.Http;
+@model DepartmentModel
 @inject IHttpContextAccessor http
 @inject ApplicationDbContext context
 @{
@@ -57,7 +58,7 @@
 @* If the user clicks on a department, display a delete department and add sub department link for them *@
 @if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator) && (int)ViewData["id"] > 0)
 {
-    <a class="btn btn-primary" asp-action="AddSubDepartment" asp-controller="Department" asp-route-id="@ViewData["id"]">Add Sub Department</a>
+    <a class="btn btn-primary" asp-action="AddSubDepartment" asp-controller="Department" asp-route-id="@Model.DepartmentId">Add Sub Department</a>
 }
 
 <div class="text-center">

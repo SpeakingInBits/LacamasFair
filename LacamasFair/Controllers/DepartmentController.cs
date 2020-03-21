@@ -23,10 +23,14 @@ namespace LacamasFair.Controllers
         [AllowAnonymous] // Anybody can view the departments
         public async Task<IActionResult> Home(int id)
         {
+            //Get the department name
             string departmentName = await GetDepartmentName(id);
             ViewData["DepartmentName"] = departmentName;
             ViewData["id"] = id;
-            return View();
+
+            //Grab that department with the correct id passed to model bind to the add sub department link
+            DepartmentModel dept = await DepartmentDb.GetDepartmentById(_context, id);
+            return View(dept);
         }
 
         private async Task<string> GetDepartmentName(int id)
@@ -43,6 +47,7 @@ namespace LacamasFair.Controllers
             return departmentName;
         }
 
+        #region Add parent department methods
         [HttpGet]
         public IActionResult AddDepartment() 
         {
@@ -60,7 +65,9 @@ namespace LacamasFair.Controllers
             }
             return View();
         }
+        #endregion
 
+        #region Edit parent department methods
         [HttpGet]
         public async Task<IActionResult> EditDepartment(int? id) 
         {
@@ -89,7 +96,9 @@ namespace LacamasFair.Controllers
             }
             return View(department);
         }
+        #endregion
 
+        #region Delete parent department methods
         [HttpGet]
         public async Task<IActionResult> DeleteDepartment(int id) 
         {
@@ -109,7 +118,10 @@ namespace LacamasFair.Controllers
             TempData["Message"] = $"{department.DepartmentName} department deleted successfully";
             return RedirectToAction(nameof(Home));
         }
+        #endregion
 
+        #region Add sub department methods
+        [HttpGet]
         public IActionResult AddSubDepartment(int id)
         {
             ViewData["id"] = id;
@@ -117,6 +129,7 @@ namespace LacamasFair.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddSubDepartment(SubDeptIdModel subDepartment)
         {
             if (ModelState.IsValid)
@@ -127,5 +140,6 @@ namespace LacamasFair.Controllers
             }
             return View();
         }
+        #endregion
     }
 }
