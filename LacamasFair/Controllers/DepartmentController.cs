@@ -31,6 +31,7 @@ namespace LacamasFair.Controllers
             //Grab that department with the correct id passed to model bind to the add sub department link
             DepartmentModel dept = await DepartmentDb.GetDepartmentById(_context, id);
 
+            //Gets all of the sub departments in the database and put it in a ViewBag
             ViewBag.SubDepartments = await SubDepartmentDb.GetAllSubDepartments(_context);
 
             return View(dept);
@@ -49,6 +50,7 @@ namespace LacamasFair.Controllers
             }
             return departmentName;
         }
+
 
         #region Add parent department methods
         [HttpGet]
@@ -132,13 +134,44 @@ namespace LacamasFair.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddSubDepartment(SubDeptIdModel subDepartment)
         {
             if (ModelState.IsValid)
             {
                 await SubDepartmentDb.AddSubDepartment(_context, subDepartment);
                 TempData["Message"] = $"{subDepartment.SubDeptName} sub department added successfully";
+                return RedirectToAction(nameof(Home));
+            }
+            return View();
+        }
+        #endregion
+
+        [AllowAnonymous]
+        public async Task<IActionResult> SubDepartment(int id) 
+        {
+            //Gets all of the sub departments that are tied to that specific id and puts it in a ViewBag
+            ViewBag.SubDepartments = await SubDepartmentDb.GetAllSubDepartmentsById(_context, id);
+
+            //Gets the sub department with the id and passes it in to the SubDepartment view
+            SubDeptIdModel subDept = await SubDepartmentDb.GetSubDepartmentById(_context, id);
+
+            return View(subDept);
+        }
+
+        #region Add sub department class methods
+        public async Task<IActionResult> AddSubDeptClass(int id) 
+        {
+            SubDeptIdModel subDept = await SubDepartmentDb.GetSubDepartmentById(_context, id);
+            return View(subDept);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddSubDeptClass(SubDeptIdModel subDeptClass) 
+        {
+            if (ModelState.IsValid) 
+            {
+                await SubDepartmentDb.AddSubDepartment(_context, subDeptClass);
+                TempData["Message"] = $"{subDeptClass.SubDeptName} sub department class added successfully";
                 return RedirectToAction(nameof(Home));
             }
             return View();
