@@ -35,7 +35,7 @@ namespace LacamasFair.Models
         /// Text of Fair Entry rules that should be able to be updated by admin
         /// </summary>
         [StringLength(1000)]
-        [Display(Name = "Fair Entry Rules")]
+        [Display(Name = "Class Entry Rules")]
         public string FairEntryRules { get; set; }
 
         /// <summary>
