@@ -26,7 +26,12 @@
                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="true" aria-controls="collapse">
                         @item.DeptClasses
                     </button>
-                    <a class="btn btn-success text-dark" asp-action="EditSubDeptClass" asp-controller="Department" asp-route-id="@item.SubDeptId">Edit class</a>
+
+                    @if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator))
+                    { 
+                        <a class="btn btn-success text-dark" asp-action="EditSubDeptClass" asp-controller="Department" asp-route-id="@item.SubDeptId">Edit class</a>
+                        <a class="btn btn-danger text-dark" asp-action="DeleteSubDeptClass" asp-controller="Department" asp-route-id="@item.SubDeptId">Delete class</a>
+                    }
                 </h2>
             </div>
             <div id="collapse" class="collapse show" aria-labelledby="heading" data-parent="#departmentClasses">
