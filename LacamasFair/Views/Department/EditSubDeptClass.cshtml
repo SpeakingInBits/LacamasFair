@@ -1,0 +1,38 @@
+﻿@model SubDeptIdModel
+
+@{
+    ViewData["Title"] = "Edit Sub Department Class";
+    Layout = "/Views/Shared/_FairbookLayout.cshtml";
+}
+
+<h1>Add Class Entry Rule</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditSubDeptClass">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SubDeptId" class="form-control" />
+            <input type="hidden" asp-for="DepartmentId" class="form-control" />
+            <input type="hidden" asp-for="SubDeptName" class="form-control" />
+            <div class="form-group">
+                <label asp-for="DeptClasses" class="control-label"></label>
+                <input asp-for="DeptClasses" class="form-control" />
+                <span asp-validation-for="DeptClasses" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FairEntryRules" class="control-label"></label>
+                <textarea asp-for="FairEntryRules" class="form-control"></textarea>
+                <span asp-validation-for="FairEntryRules" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" /> |
+                <a asp-action="Home">Back To Department Home</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
