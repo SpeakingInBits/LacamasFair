@@ -71,6 +71,7 @@ namespace LacamasFair.Controllers
         }
         #endregion
 
+
         #region Add parent department methods
         [HttpGet]
         public IActionResult AddDepartment() 
@@ -195,15 +196,47 @@ namespace LacamasFair.Controllers
         }
         #endregion
 
-        #region Delete sub department methods
-        public async Task<IActionResult> DeleteSubDepartment(int id) 
+        //TODO
+        #region Edit sub department methods
+        [HttpGet]
+        public async Task<IActionResult> EditSubDepartment(int id) 
         {
-            throw new NotImplementedException();
+            SubDeptIdModel subDept = await SubDepartmentDb.GetSubDepartmentById(_context, id);
+            return View(subDept);
         }
 
-        public async Task<IActionResult> DeleteSubDepartmentConfirmed() 
+        [HttpPost]
+        public async Task<IActionResult> EditSubDepartment(SubDeptIdModel subDepartment) 
         {
-            throw new NotImplementedException();
+            if (ModelState.IsValid) 
+            {
+                await SubDepartmentDb.UpdateSubDepartment(_context, subDepartment);
+                TempData["Message"] = $"{subDepartment.SubDeptName} edited successfully";
+                return RedirectToAction(nameof(Home));
+            }
+            return View();
+        }
+        #endregion
+
+        #region Delete sub department methods
+        [HttpGet]
+        public async Task<IActionResult> DeleteSubDepartment(int id) 
+        {
+            SubDeptIdModel subDepartment = await SubDepartmentDb.GetSubDepartmentById(_context, id);
+            if (subDepartment == null) 
+            {
+                return NotFound();
+            }
+            return View(subDepartment);
+        }
+
+        [HttpPost, ActionName("DeleteSubDepartment")]
+        public async Task<IActionResult> DeleteSubDepartmentConfirmed(int id) 
+        {
+            SubDeptIdModel subDepartment = await SubDepartmentDb.GetSubDepartmentById(_context, id);
+            await SubDepartmentDb.DeleteSubDepartmentById(_context, subDepartment);
+            TempData["Message"] = $"{subDepartment.SubDeptName} sub department deleted successfully";
+            return RedirectToAction(nameof(Home));
         }
         #endregion
 
@@ -227,7 +260,8 @@ namespace LacamasFair.Controllers
         }
         #endregion
 
-        #region Add class entry rule methods
+        #region Edit sub department class methods
+        [HttpGet]
         public async Task<IActionResult> EditSubDeptClass(int id) 
         {
             SubDeptIdModel subDept = await SubDepartmentDb.GetSubDepartmentById(_context, id);
@@ -246,5 +280,28 @@ namespace LacamasFair.Controllers
             return View();
         }
         #endregion
+
+        #region Delete sub department class methods
+        [HttpGet]
+        public async Task<IActionResult> DeleteSubDeptClass(int id) 
+        {
+            SubDeptIdModel subDeptClass = await SubDepartmentDb.GetSubDepartmentById(_context, id);
+            if (subDeptClass == null) 
+            {
+                return NotFound();
+            }
+            return View(subDeptClass);
+        }
+
+        [HttpPost, ActionName("DeleteSubDeptClass")]
+        public async Task<IActionResult> DeleteSubDeptClassConfirmed(int id) 
+        {
+            SubDeptIdModel subDepartment = await SubDepartmentDb.GetSubDepartmentById(_context, id);
+            await SubDepartmentDb.DeleteSubDepartmentById(_context, subDepartment);
+            TempData["Message"] = $"{subDepartment.DeptClasses} sub department class deleted successfully";
+            return RedirectToAction(nameof(Home));
+        }
+        #endregion
+
     }
 }
