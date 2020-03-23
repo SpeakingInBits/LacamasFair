@@ -43,7 +43,22 @@
 @* If the user clicks on a department, display a delete department and add sub department link for them *@
 @if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator) && (int)ViewData["id"] > 0)
 {
-    <div class="text-center">
-        <a class="btn btn-primary text-dark" asp-action="AddSubDepartment" asp-controller="Department" asp-route-id="@Model.DepartmentId">Add Sub Department</a>
+<div class="btn-toolbar" style="margin-left: 27%">
+    <a class="btn btn-primary btn-group mr-2 text-dark" asp-action="AddSubDepartment" asp-controller="Department" asp-route-id="@Model.DepartmentId">Add Sub Department</a>
+
+    <div class="dropdown btn-group mr-2">
+        <button class="btn btn-danger dropdown-toggle text-dark" type="button" id="dropdownEditButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Delete Sub Department
+        </button>
+        <div class="dropdown-menu background-dark" aria-labelledby="dropdownEditButton">
+            @foreach (SubDeptIdModel item in ViewBag.SubDepartments)
+            {
+                @if (Model.DepartmentId == item.DepartmentId) //If the user clicked a department nav link, only show it's sub departments in the dropdown
+                {
+                    <a class="dropdown-item" asp-action="DeleteSubDepartment" asp-controller="Department" asp-route-id="@item.SubDeptId">@item.SubDeptName</a>
+                }
+            }
+        </div>
     </div>
+</div>
 }
