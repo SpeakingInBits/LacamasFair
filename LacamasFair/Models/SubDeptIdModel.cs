@@ -42,7 +42,7 @@ namespace LacamasFair.Models
         /// Classes should store information about current available department classes
         /// </summary>
         [StringLength(750)]
-        [Display(Name = "Department Classes (Ex. SubDepartment: Baking, Classes: Pies, Cookies, etc)")]
+        [Display(Name = "Department Class")]
         public string DeptClasses { get; set; }
     }
 }
