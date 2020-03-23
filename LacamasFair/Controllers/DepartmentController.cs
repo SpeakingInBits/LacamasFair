@@ -71,7 +71,6 @@ namespace LacamasFair.Controllers
         }
         #endregion
 
-
         #region Add parent department methods
         [HttpGet]
         public IActionResult AddDepartment() 
@@ -196,7 +195,6 @@ namespace LacamasFair.Controllers
         }
         #endregion
 
-        //TODO
         #region Edit sub department methods
         [HttpGet]
         public async Task<IActionResult> EditSubDepartment(int id) 
@@ -302,6 +300,5 @@ namespace LacamasFair.Controllers
             return RedirectToAction(nameof(Home));
         }
         #endregion
-
     }
 }
