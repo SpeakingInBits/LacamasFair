@@ -1,7 +1,7 @@
 ﻿@model DepartmentModel
 
 @{
-ViewData["Title"] = "Home";
+    ViewData["Title"] = "Home";
     Layout = "/Views/Shared/_FairbookLayout.cshtml";
 }
 
@@ -14,32 +14,25 @@ ViewData["Title"] = "Home";
 }
 
 @* Viewable by Admin only *@
-@await Html.PartialAsync("_AdminControl", Model)
+@if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator))
+{
+    @await Html.PartialAsync("_AdminControl", Model)
+}
 
 <div class="text-center">
     <h1>Welcome To @ViewData["DepartmentName"] Department</h1>
 </div>
 
-@* TODO (in progress below): Display the correct information based what department is clicked on in the nav-link *@
-
-@* TODO: Display the sub departments of that department *@
-
 @* If one of the departments are clicked, show its sub departments *@
 @if ((int)ViewData["id"] > 0)
 {
-    @foreach (SubDeptIdModel item in ViewBag.SubDepartments) 
+    @foreach (SubDeptIdModel item in ViewBag.SubDepartments)
     {
         //If the user clicks a department in the nav link, only show the sub departments tied to it
-        @if (Model.DepartmentId == item.DepartmentId) 
+        @if (Model.DepartmentId == item.DepartmentId)
         {
-            <a class="btn btn-success btn-group mr-2 text-dark" asp-action="Home" asp-controller="Department">@item.SubDeptName</a>        
+            //Link to view that sub department
+            <a class="btn btn-success text-dark" asp-action="SubDepartment" asp-controller="Department" asp-route-id="@item.SubDeptId">@item.SubDeptName</a><br />
         }
     }
 }
-
-@*
-    Note:
-    When a user clicks on a department, display all of it's sub departments.
-    When a user clicks on a sub department, display all of it's classes as a pop up button that shows it's entry rules.
-    Use "Accordion Example" from this link: https://getbootstrap.com/docs/4.4/components/collapse/
-*@
