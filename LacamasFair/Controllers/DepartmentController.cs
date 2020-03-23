@@ -20,6 +20,7 @@ namespace LacamasFair.Controllers
             _context = context;
         }
 
+        #region Methods for Department Home Page
         [AllowAnonymous] // Anybody can view the departments
         public async Task<IActionResult> Home(int id)
         {
@@ -29,12 +30,30 @@ namespace LacamasFair.Controllers
             ViewData["id"] = id;
 
             //Grab that department with the correct id passed to model bind to the add sub department link
-            DepartmentModel dept = await DepartmentDb.GetDepartmentById(_context, id);
+            DepartmentModel dept = await GetDepartment(id);
 
             //Gets all of the sub departments in the database and put it in a ViewBag
-            ViewBag.SubDepartments = await SubDepartmentDb.GetAllSubDepartments(_context);
+            ViewBag.SubDepartments = await GetUniqueSubDepartments();
 
             return View(dept);
+        }
+
+        private async Task<List<SubDeptIdModel>> GetUniqueSubDepartments()
+        {
+            List<SubDeptIdModel> list = new List<SubDeptIdModel>();
+            List<SubDeptIdModel> subDepts = await SubDepartmentDb.GetAllSubDepartments(_context);
+
+            //Loop that goes through each item in the subDept list and filters out the duplicate names
+            foreach (var item in subDepts.GroupBy(s => s.SubDeptName).Select(i => i.First())) 
+            {
+                list.Add(item);
+            }
+            return list;
+        }
+
+        private async Task<DepartmentModel> GetDepartment(int id)
+        {
+            return await DepartmentDb.GetDepartmentById(_context, id);
         }
 
         private async Task<string> GetDepartmentName(int id)
@@ -50,7 +69,7 @@ namespace LacamasFair.Controllers
             }
             return departmentName;
         }
-
+        #endregion
 
         #region Add parent department methods
         [HttpGet]
@@ -125,6 +144,36 @@ namespace LacamasFair.Controllers
         }
         #endregion
 
+        #region Methods for Sub Departments Page
+        [AllowAnonymous]
+        public async Task<IActionResult> SubDepartment(int id)
+        {
+            //Gets all of the sub departments that are tied to that specific id and puts it in a ViewBag
+            ViewBag.SubDepartments = await GetAllSubDepartments(id);
+
+            //Get the sub department with the id and it's classes and put it in a view bag
+            SubDeptIdModel subDept = await GetSubDepartment(id);
+            ViewBag.SubDepartmentClasses = await GetAllSubDeptClasses(_context, subDept.SubDeptName);
+
+            return View(subDept);
+        }
+
+        private async Task<List<SubDeptIdModel>> GetAllSubDeptClasses(ApplicationDbContext context, string subDepartmentName) 
+        {
+            return await SubDepartmentDb.GetAllSubDepartmentClasses(_context, subDepartmentName);
+        }
+
+        private async Task<List<SubDeptIdModel>> GetAllSubDepartments(int id) 
+        {
+            return await SubDepartmentDb.GetAllSubDepartmentsById(_context, id);
+        }
+
+        private async Task<SubDeptIdModel> GetSubDepartment(int id)
+        {
+            return await SubDepartmentDb.GetSubDepartmentById(_context, id);
+        }
+        #endregion
+
         #region Add sub department methods
         [HttpGet]
         public IActionResult AddSubDepartment(int id)
@@ -146,17 +195,17 @@ namespace LacamasFair.Controllers
         }
         #endregion
 
-        [AllowAnonymous]
-        public async Task<IActionResult> SubDepartment(int id) 
+        #region Delete sub department methods
+        public async Task<IActionResult> DeleteSubDepartment(int id) 
         {
-            //Gets all of the sub departments that are tied to that specific id and puts it in a ViewBag
-            ViewBag.SubDepartments = await SubDepartmentDb.GetAllSubDepartmentsById(_context, id);
-
-            //Gets the sub department with the id and passes it in to the SubDepartment view
-            SubDeptIdModel subDept = await SubDepartmentDb.GetSubDepartmentById(_context, id);
-
-            return View(subDept);
+            throw new NotImplementedException();
         }
+
+        public async Task<IActionResult> DeleteSubDepartmentConfirmed() 
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
 
         #region Add sub department class methods
         public async Task<IActionResult> AddSubDeptClass(int id) 
@@ -172,6 +221,26 @@ namespace LacamasFair.Controllers
             {
                 await SubDepartmentDb.AddSubDepartment(_context, subDeptClass);
                 TempData["Message"] = $"{subDeptClass.SubDeptName} sub department class added successfully";
+                return RedirectToAction(nameof(Home));
+            }
+            return View();
+        }
+        #endregion
+
+        #region Add class entry rule methods
+        public async Task<IActionResult> EditSubDeptClass(int id) 
+        {
+            SubDeptIdModel subDept = await SubDepartmentDb.GetSubDepartmentById(_context, id);
+            return View(subDept);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditSubDeptClass(SubDeptIdModel subDeptClass) 
+        {
+            if (ModelState.IsValid) 
+            {
+                await SubDepartmentDb.UpdateSubDepartment(_context, subDeptClass);
+                TempData["Message"] = "Class entry rule added successfully";
                 return RedirectToAction(nameof(Home));
             }
             return View();
