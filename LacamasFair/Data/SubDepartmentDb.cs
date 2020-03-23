@@ -94,13 +94,10 @@ namespace LacamasFair.Data.Migrations
         /// </summary>
         /// <param name="context">The Application Context</param>
         /// <param name="subId">The SubDepartment Id</param>
-        public static async Task DeleteSubDepartmentById(ApplicationDbContext context, int subId)
+        public static async Task DeleteSubDepartmentById(ApplicationDbContext context, SubDeptIdModel subDepartment)
         {
-            SubDeptIdModel model = new SubDeptIdModel()
-            { 
-                SubDeptId = subId
-            };
-            context.Entry(model).State = EntityState.Deleted;
+            await context.AddAsync(subDepartment);
+            context.Entry(subDepartment).State = EntityState.Deleted;
             await context.SaveChangesAsync();
         }
     }
