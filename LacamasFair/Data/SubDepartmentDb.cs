@@ -23,6 +23,21 @@ namespace LacamasFair.Data.Migrations
         }
 
         /// <summary>
+        /// Gets all the sub departments for that specific id
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static async Task<List<SubDeptIdModel>> GetAllSubDepartmentsById(ApplicationDbContext context, int id)
+        {
+            List<SubDeptIdModel> model =
+                await (from s in context.SubDepartments
+                       where s.SubDeptId == id
+                       select s).ToListAsync();
+            return model;
+        }
+
+        /// <summary>
         /// Gets the sub department out of the database with id
         /// </summary>
         /// <param name="context">The Application Context</param>
