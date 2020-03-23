@@ -38,6 +38,20 @@ namespace LacamasFair.Data.Migrations
         }
 
         /// <summary>
+        /// Gets all the sub department's classes
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="subDeptClass"></param>
+        /// <returns></returns>
+        public static async Task<List<SubDeptIdModel>> GetAllSubDepartmentClasses(ApplicationDbContext context, string subDeptClass) 
+        {
+            List<SubDeptIdModel> classes = await (from s in context.SubDepartments
+                                                  where s.SubDeptName == subDeptClass
+                                                  select s).ToListAsync();
+            return classes;
+        }
+
+        /// <summary>
         /// Gets the sub department out of the database with id
         /// </summary>
         /// <param name="context">The Application Context</param>
