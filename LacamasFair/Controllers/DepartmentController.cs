@@ -38,18 +38,14 @@ namespace LacamasFair.Controllers
             ViewData["id"] = id;
 
             //Gets all of the sub departments in the database and put it in a ViewBag
-            ViewBag.SubDepartments = await GetUniqueSubDepartments();
+            ViewBag.SubDepartments = await GetAllSubDepartment();
 
             return View(dept);
         }
 
-        private async Task<IEnumerable<SubDeptIdModel>> GetUniqueSubDepartments()
+        private async Task<List<SubDeptIdModel>> GetAllSubDepartment()
         {
-            IEnumerable<SubDeptIdModel> subDepts = (await SubDepartmentDb.GetAllSubDepartments(_context))
-                                                                         .GroupBy(s => s.SubDeptName)
-                                                                         .Select(d => d.First())
-                                                                         .Distinct(); ;
-            return subDepts;
+            return await SubDepartmentDb.GetAllSubDepartments(_context);
         }
 
         private async Task<DepartmentModel> GetDepartment(int id)
@@ -132,14 +128,14 @@ namespace LacamasFair.Controllers
 
             //Get the sub department with the id and it's classes and put it in a view bag
             SubDeptIdModel subDept = await GetSubDepartment(id);
-            ViewBag.SubDepartmentClasses = await GetAllSubDeptClasses(_context, subDept.SubDeptName);
+            ViewBag.SubDepartmentClasses = await GetAllSubDeptClasses(subDept.SubDeptId);
 
             return View(subDept);
         }
 
-        private async Task<List<SubDeptIdModel>> GetAllSubDeptClasses(ApplicationDbContext context, string subDepartmentName) 
+        private async Task<List<SubDeptClassModel>> GetAllSubDeptClasses(int subDeptId)
         {
-            return await SubDepartmentDb.GetAllSubDepartmentClasses(_context, subDepartmentName);
+            return await SubDeptClassDb.GetAllSubDeptClassesById(_context, subDeptId);
         }
 
         private async Task<List<SubDeptIdModel>> GetAllSubDepartments(int id) 
@@ -210,37 +206,40 @@ namespace LacamasFair.Controllers
             return RedirectToAction(nameof(Home));
         }
 
-        public async Task<IActionResult> AddSubDeptClass(int id) 
+        [HttpGet]
+        public IActionResult AddSubDeptClass(int id) 
         {
-            SubDeptIdModel subDept = await SubDepartmentDb.GetSubDepartmentById(_context, id);
-            return View(subDept);
+            ViewData["id"] = id;
+            return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddSubDeptClass(SubDeptIdModel subDeptClass) 
+        public async Task<IActionResult> AddSubDeptClass(SubDeptClassModel subDeptClass) 
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-                await SubDepartmentDb.AddSubDepartment(_context, subDeptClass);
-                TempData["Message"] = $"{subDeptClass.SubDeptName} sub department class added successfully";
+                await SubDeptClassDb.AddSubDeptClass(_context, subDeptClass);
+                TempData["Message"] = $"{subDeptClass.ClassName} sub department class added successfully";
                 return RedirectToAction(nameof(Home));
             }
             return View();
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditSubDeptClass(int id) 
+        public async Task<IActionResult> EditSubDeptClass(int classId, int subDeptId)
         {
-            SubDeptIdModel subDept = await SubDepartmentDb.GetSubDepartmentById(_context, id);
-            return View(subDept);
+            SubDeptClassModel subDeptClass = await SubDeptClassDb.GetSubDeptClassById(_context, classId);
+            ViewData["ClassId"] = classId;
+            ViewData["SubDeptId"] = subDeptId;
+            return View(subDeptClass);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditSubDeptClass(SubDeptIdModel subDeptClass) 
+        public async Task<IActionResult> EditSubDeptClass(SubDeptClassModel subDeptClass)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-                await SubDepartmentDb.UpdateSubDepartment(_context, subDeptClass);
+                await SubDeptClassDb.UpdateSubDeptClass(_context, subDeptClass);
                 TempData["Message"] = "Class entry rule added successfully";
                 return RedirectToAction(nameof(Home));
             }
@@ -248,22 +247,18 @@ namespace LacamasFair.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteSubDeptClass(int id) 
+        public async Task<IActionResult> DeleteSubDeptClass(int id)
         {
-            SubDeptIdModel subDeptClass = await SubDepartmentDb.GetSubDepartmentById(_context, id);
-            if (subDeptClass == null) 
-            {
-                return NotFound();
-            }
+            SubDeptClassModel subDeptClass = await SubDeptClassDb.GetSubDeptClassById(_context, id);
             return View(subDeptClass);
         }
 
         [HttpPost, ActionName("DeleteSubDeptClass")]
-        public async Task<IActionResult> DeleteSubDeptClassConfirmed(int id) 
+        public async Task<IActionResult> DeleteSubDeptClassConfirmed(int id)
         {
-            SubDeptIdModel subDepartment = await SubDepartmentDb.GetSubDepartmentById(_context, id);
-            await SubDepartmentDb.DeleteSubDepartmentById(_context, subDepartment);
-            TempData["Message"] = $"{subDepartment.DeptClasses} sub department class deleted successfully";
+            SubDeptClassModel subDepartment = await SubDeptClassDb.GetSubDeptClassById(_context, id);
+            await SubDeptClassDb.DeleteSubDeptClass(_context, subDepartment);
+            TempData["Message"] = $"{subDepartment.ClassName} sub department class deleted successfully";
             return RedirectToAction(nameof(Home));
         }
     }
