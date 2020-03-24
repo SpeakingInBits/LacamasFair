@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "SubDepartment";
-    Layout = "/Views/Shared/_FairbookLayout.cshtml"; //TODO: Change nav bar to the specific department's sub departments
+    Layout = "/Views/Shared/_FairbookLayout.cshtml";
 }
 
 @if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator))
@@ -18,25 +18,28 @@
 
 @* Display that sub department's classes *@
 <div class="accordion" id="departmentClasses">
-    @foreach (SubDeptIdModel item in ViewBag.SubDepartmentClasses)
+    @foreach (SubDeptClassModel item in ViewBag.SubDepartmentClasses)
     {
         <div class="card">
             <div class="card-header" id="heading">
                 <h2 class="mb-0">
                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="true" aria-controls="collapse">
-                        @item.DeptClasses
+                        @item.ClassName
                     </button>
 
                     @if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator))
                     { 
-                        <a class="btn btn-success text-dark" asp-action="EditSubDeptClass" asp-controller="Department" asp-route-id="@item.SubDeptId">Edit class</a>
-                        <a class="btn btn-danger text-dark" asp-action="DeleteSubDeptClass" asp-controller="Department" asp-route-id="@item.SubDeptId">Delete class</a>
+                        <a class="btn btn-success text-dark" asp-action="EditSubDeptClass" asp-controller="Department" 
+                           asp-route-classId="@item.ClassId" asp-route-subDeptId="@item.SubDeptId">
+                            Edit class
+                        </a>
+                        <a class="btn btn-danger text-dark" asp-action="DeleteSubDeptClass" asp-controller="Department" asp-route-id="@item.ClassId">Delete class</a>
                     }
                 </h2>
             </div>
             <div id="collapse" class="collapse show" aria-labelledby="heading" data-parent="#departmentClasses">
                 <div class="card-body text-dark">
-                    @item.FairEntryRules
+                    @item.ClassRules
                 </div>
             </div>
         </div>

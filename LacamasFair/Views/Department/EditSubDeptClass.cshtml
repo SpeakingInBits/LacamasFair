@@ -1,29 +1,28 @@
-﻿@model SubDeptIdModel
+﻿@model SubDeptClassModel
 
 @{
-    ViewData["Title"] = "Edit Sub Department Class";
+    ViewData["Title"] = "EditSubDeptClass";
     Layout = "/Views/Shared/_FairbookLayout.cshtml";
 }
 
-<h1>Edit Class</h1>
+<h1>Edit @Model.ClassName Class</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="EditSubDeptClass">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="SubDeptId" class="form-control" />
-            <input type="hidden" asp-for="DepartmentId" class="form-control" />
-            <input type="hidden" asp-for="SubDeptName" class="form-control" />
+                <input type="hidden" asp-for="ClassId" class="form-control" value="@ViewData["ClassId"]" />
+                <input type="hidden" asp-for="SubDeptId" class="form-control" value="@ViewData["SubDeptId"]" />
             <div class="form-group">
-                <label asp-for="DeptClasses" class="control-label"></label>
-                <input asp-for="DeptClasses" class="form-control" />
-                <span asp-validation-for="DeptClasses" class="text-danger"></span>
+                <label asp-for="ClassName" class="control-label"></label>
+                <input asp-for="ClassName" class="form-control" value="@Model.ClassName" />
+                <span asp-validation-for="ClassName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FairEntryRules" class="control-label"></label>
-                <textarea asp-for="FairEntryRules" class="form-control"></textarea>
-                <span asp-validation-for="FairEntryRules" class="text-danger"></span>
+                <label asp-for="ClassRules" class="control-label"></label>
+                <input asp-for="ClassRules" class="form-control" value="@Model.ClassRules" />
+                <span asp-validation-for="ClassRules" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Edit" class="btn btn-primary" /> |
