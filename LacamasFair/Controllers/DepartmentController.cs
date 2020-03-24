@@ -23,13 +23,19 @@ namespace LacamasFair.Controllers
         [AllowAnonymous] // Anybody can view the departments
         public async Task<IActionResult> Home(int id)
         {
-            //Get the department name
-            string departmentName = await GetDepartmentName(id);
-            ViewData["DepartmentName"] = departmentName;
-            ViewData["id"] = id;
-
             //Grab that department with the correct id passed to model bind to the add sub department link
             DepartmentModel dept = await GetDepartment(id);
+            
+            if (id == 0)
+            {
+                ViewData["DepartmentName"] = "";
+            }
+            else 
+            {
+                ViewData["DepartmentName"] = dept.DepartmentName;
+            }
+
+            ViewData["id"] = id;
 
             //Gets all of the sub departments in the database and put it in a ViewBag
             ViewBag.SubDepartments = await GetUniqueSubDepartments();
@@ -53,20 +59,6 @@ namespace LacamasFair.Controllers
         private async Task<DepartmentModel> GetDepartment(int id)
         {
             return await DepartmentDb.GetDepartmentById(_context, id);
-        }
-
-        private async Task<string> GetDepartmentName(int id)
-        {
-            List<DepartmentModel> departments = await DepartmentDb.GetAllDepartments(_context);
-            string departmentName = "";
-            foreach (DepartmentModel item in departments)
-            {
-                if (item.DepartmentId == id)
-                {
-                    departmentName = item.DepartmentName;
-                }
-            }
-            return departmentName;
         }
 
         [HttpGet]
