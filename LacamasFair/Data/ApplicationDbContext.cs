@@ -16,6 +16,7 @@ namespace LacamasFair.Data
 
         public DbSet<DepartmentModel> Departments { get; set; }
         public DbSet<SubDeptIdModel> SubDepartments { get; set; }
+        public DbSet<SubDeptClassModel> SubDepartmentClasses { get; set; }
         public DbSet<EntryFormModel> EntryForms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,6 +28,12 @@ namespace LacamasFair.Data
                         .HasOne<DepartmentModel>() //The principal entity
                         .WithMany()
                         .HasForeignKey(subDepartments => subDepartments.DepartmentId); //The foreign key that you want to set up as from the SubDeptIdModel class
+
+            //SubDeptClassModel (SubDeptId property) -> SubDeptIdModel (SubDeptId property)
+            modelBuilder.Entity<SubDeptClassModel>()
+                        .HasOne<SubDeptIdModel>()
+                        .WithMany()
+                        .HasForeignKey(subDeptClass => subDeptClass.SubDeptId);
 
             //EntryFormModel (SubDeptId property) -> SubDeptIdModel (SubDeptId property)
             modelBuilder.Entity<EntryFormModel>()
