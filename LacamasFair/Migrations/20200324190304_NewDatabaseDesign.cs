@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LacamasFair.Migrations
 {
-    public partial class initial : Migration
+    public partial class NewDatabaseDesign : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -172,9 +172,7 @@ namespace LacamasFair.Migrations
                     SubDeptId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DepartmentId = table.Column<int>(nullable: false),
-                    SubDeptName = table.Column<string>(maxLength: 60, nullable: false),
-                    FairEntryRules = table.Column<string>(maxLength: 1000, nullable: true),
-                    DeptClasses = table.Column<string>(maxLength: 750, nullable: true)
+                    SubDeptName = table.Column<string>(maxLength: 60, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -200,6 +198,27 @@ namespace LacamasFair.Migrations
                     table.PrimaryKey("PK_EntryForms", x => x.SubDeptId);
                     table.ForeignKey(
                         name: "FK_EntryForms_SubDepartments_SubDeptId",
+                        column: x => x.SubDeptId,
+                        principalTable: "SubDepartments",
+                        principalColumn: "SubDeptId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubDepartmentClasses",
+                columns: table => new
+                {
+                    ClassId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SubDeptId = table.Column<int>(nullable: false),
+                    ClassName = table.Column<string>(maxLength: 750, nullable: true),
+                    ClassRules = table.Column<string>(maxLength: 1000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubDepartmentClasses", x => x.ClassId);
+                    table.ForeignKey(
+                        name: "FK_SubDepartmentClasses_SubDepartments_SubDeptId",
                         column: x => x.SubDeptId,
                         principalTable: "SubDepartments",
                         principalColumn: "SubDeptId",
@@ -246,6 +265,11 @@ namespace LacamasFair.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SubDepartmentClasses_SubDeptId",
+                table: "SubDepartmentClasses",
+                column: "SubDeptId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SubDepartments_DepartmentId",
                 table: "SubDepartments",
                 column: "DepartmentId");
@@ -270,6 +294,9 @@ namespace LacamasFair.Migrations
 
             migrationBuilder.DropTable(
                 name: "EntryForms");
+
+            migrationBuilder.DropTable(
+                name: "SubDepartmentClasses");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

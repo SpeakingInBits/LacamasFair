@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LacamasFair.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200318192211_initial")]
-    partial class initial
+    [Migration("20200324190304_NewDatabaseDesign")]
+    partial class NewDatabaseDesign
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,6 +55,31 @@ namespace LacamasFair.Migrations
                     b.ToTable("EntryForms");
                 });
 
+            modelBuilder.Entity("LacamasFair.Models.SubDeptClassModel", b =>
+                {
+                    b.Property<int>("ClassId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClassName")
+                        .HasColumnType("nvarchar(750)")
+                        .HasMaxLength(750);
+
+                    b.Property<string>("ClassRules")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<int>("SubDeptId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClassId");
+
+                    b.HasIndex("SubDeptId");
+
+                    b.ToTable("SubDepartmentClasses");
+                });
+
             modelBuilder.Entity("LacamasFair.Models.SubDeptIdModel", b =>
                 {
                     b.Property<int>("SubDeptId")
@@ -64,14 +89,6 @@ namespace LacamasFair.Migrations
 
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
-
-                    b.Property<string>("DeptClasses")
-                        .HasColumnType("nvarchar(750)")
-                        .HasMaxLength(750);
-
-                    b.Property<string>("FairEntryRules")
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
 
                     b.Property<string>("SubDeptName")
                         .IsRequired()
@@ -286,6 +303,15 @@ namespace LacamasFair.Migrations
                 });
 
             modelBuilder.Entity("LacamasFair.Models.EntryFormModel", b =>
+                {
+                    b.HasOne("LacamasFair.Models.SubDeptIdModel", null)
+                        .WithMany()
+                        .HasForeignKey("SubDeptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LacamasFair.Models.SubDeptClassModel", b =>
                 {
                     b.HasOne("LacamasFair.Models.SubDeptIdModel", null)
                         .WithMany()
