@@ -43,17 +43,13 @@ namespace LacamasFair.Controllers
             return View(dept);
         }
 
-        private async Task<List<SubDeptIdModel>> GetUniqueSubDepartments()
+        private async Task<IEnumerable<SubDeptIdModel>> GetUniqueSubDepartments()
         {
-            List<SubDeptIdModel> list = new List<SubDeptIdModel>();
-            List<SubDeptIdModel> subDepts = await SubDepartmentDb.GetAllSubDepartments(_context);
-
-            //Loop that goes through each item in the subDept list and filters out the duplicate names
-            foreach (var item in subDepts.GroupBy(s => s.SubDeptName).Select(i => i.First())) 
-            {
-                list.Add(item);
-            }
-            return list;
+            IEnumerable<SubDeptIdModel> subDepts = (await SubDepartmentDb.GetAllSubDepartments(_context))
+                                                                         .GroupBy(s => s.SubDeptName)
+                                                                         .Select(d => d.First())
+                                                                         .Distinct(); ;
+            return subDepts;
         }
 
         private async Task<DepartmentModel> GetDepartment(int id)
