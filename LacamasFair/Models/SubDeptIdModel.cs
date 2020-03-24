@@ -30,19 +30,5 @@ namespace LacamasFair.Models
         [StringLength(60)]
         [Display(Name = "Sub Department Name")]
         public string SubDeptName { get; set; }
-
-        /// <summary>
-        /// Text of Fair Entry rules that should be able to be updated by admin
-        /// </summary>
-        [StringLength(1000)]
-        [Display(Name = "Class Entry Rules")]
-        public string FairEntryRules { get; set; }
-
-        /// <summary>
-        /// Classes should store information about current available department classes
-        /// </summary>
-        [StringLength(750)]
-        [Display(Name = "Department Class")]
-        public string DeptClasses { get; set; }
     }
 }
