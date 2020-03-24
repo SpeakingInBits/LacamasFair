@@ -20,7 +20,6 @@ namespace LacamasFair.Controllers
             _context = context;
         }
 
-        #region Methods for Department Home Page
         [AllowAnonymous] // Anybody can view the departments
         public async Task<IActionResult> Home(int id)
         {
@@ -69,9 +68,7 @@ namespace LacamasFair.Controllers
             }
             return departmentName;
         }
-        #endregion
 
-        #region Add parent department methods
         [HttpGet]
         public IActionResult AddDepartment() 
         {
@@ -89,9 +86,7 @@ namespace LacamasFair.Controllers
             }
             return View();
         }
-        #endregion
 
-        #region Edit parent department methods
         [HttpGet]
         public async Task<IActionResult> EditDepartment(int? id) 
         {
@@ -120,9 +115,7 @@ namespace LacamasFair.Controllers
             }
             return View(department);
         }
-        #endregion
 
-        #region Delete parent department methods
         [HttpGet]
         public async Task<IActionResult> DeleteDepartment(int id) 
         {
@@ -142,9 +135,7 @@ namespace LacamasFair.Controllers
             TempData["Message"] = $"{department.DepartmentName} department deleted successfully";
             return RedirectToAction(nameof(Home));
         }
-        #endregion
 
-        #region Methods for Sub Departments Page
         [AllowAnonymous]
         public async Task<IActionResult> SubDepartment(int id)
         {
@@ -172,9 +163,7 @@ namespace LacamasFair.Controllers
         {
             return await SubDepartmentDb.GetSubDepartmentById(_context, id);
         }
-        #endregion
 
-        #region Add sub department methods
         [HttpGet]
         public IActionResult AddSubDepartment(int id)
         {
@@ -193,9 +182,7 @@ namespace LacamasFair.Controllers
             }
             return View();
         }
-        #endregion
 
-        #region Edit sub department methods
         [HttpGet]
         public async Task<IActionResult> EditSubDepartment(int id) 
         {
@@ -214,9 +201,7 @@ namespace LacamasFair.Controllers
             }
             return View();
         }
-        #endregion
 
-        #region Delete sub department methods
         [HttpGet]
         public async Task<IActionResult> DeleteSubDepartment(int id) 
         {
@@ -236,9 +221,7 @@ namespace LacamasFair.Controllers
             TempData["Message"] = $"{subDepartment.SubDeptName} sub department deleted successfully";
             return RedirectToAction(nameof(Home));
         }
-        #endregion
 
-        #region Add sub department class methods
         public async Task<IActionResult> AddSubDeptClass(int id) 
         {
             SubDeptIdModel subDept = await SubDepartmentDb.GetSubDepartmentById(_context, id);
@@ -256,9 +239,7 @@ namespace LacamasFair.Controllers
             }
             return View();
         }
-        #endregion
 
-        #region Edit sub department class methods
         [HttpGet]
         public async Task<IActionResult> EditSubDeptClass(int id) 
         {
@@ -277,9 +258,7 @@ namespace LacamasFair.Controllers
             }
             return View();
         }
-        #endregion
 
-        #region Delete sub department class methods
         [HttpGet]
         public async Task<IActionResult> DeleteSubDeptClass(int id) 
         {
@@ -299,6 +278,5 @@ namespace LacamasFair.Controllers
             TempData["Message"] = $"{subDepartment.DeptClasses} sub department class deleted successfully";
             return RedirectToAction(nameof(Home));
         }
-        #endregion
     }
 }
