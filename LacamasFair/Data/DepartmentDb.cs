@@ -62,7 +62,7 @@ namespace LacamasFair.Data
         }
 
         /// <summary>
-        /// Deletes Department in the database from its id
+        /// Deletes Department in the database
         /// </summary>
         /// <param name="context"The Application Context></param>
         /// <param name="id">The Department Id</param>
