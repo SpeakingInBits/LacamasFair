@@ -24,8 +24,8 @@ namespace LacamasFair.Controllers
         public async Task<IActionResult> Home(int id)
         {
             //Grab that department with the correct id passed to model bind to the add sub department link
-            DepartmentModel dept = await GetDepartment(id);
-            
+            DepartmentModel dept = await DepartmentDb.GetDepartmentById(_context, id);
+
             if (id == 0)
             {
                 ViewData["DepartmentName"] = "";
@@ -38,19 +38,9 @@ namespace LacamasFair.Controllers
             ViewData["id"] = id;
 
             //Gets all of the sub departments in the database and put it in a ViewBag
-            ViewBag.SubDepartments = await GetAllSubDepartment();
+            ViewBag.SubDepartments = await SubDepartmentDb.GetAllSubDepartments(_context);
 
             return View(dept);
-        }
-
-        private async Task<List<SubDeptIdModel>> GetAllSubDepartment()
-        {
-            return await SubDepartmentDb.GetAllSubDepartments(_context);
-        }
-
-        private async Task<DepartmentModel> GetDepartment(int id)
-        {
-            return await DepartmentDb.GetDepartmentById(_context, id);
         }
 
         [HttpGet]
@@ -124,28 +114,13 @@ namespace LacamasFair.Controllers
         public async Task<IActionResult> SubDepartment(int id)
         {
             //Gets all of the sub departments that are tied to that specific id and puts it in a ViewBag
-            ViewBag.SubDepartments = await GetAllSubDepartments(id);
+            ViewBag.SubDepartments = await SubDepartmentDb.GetAllSubDepartmentsById(_context, id);
 
             //Get the sub department with the id and it's classes and put it in a view bag
-            SubDeptIdModel subDept = await GetSubDepartment(id);
-            ViewBag.SubDepartmentClasses = await GetAllSubDeptClasses(subDept.SubDeptId);
+            SubDeptIdModel subDept = await SubDepartmentDb.GetSubDepartmentById(_context, id);
+            ViewBag.SubDepartmentClasses = await SubDeptClassDb.GetAllSubDeptClassesById(_context, subDept.SubDeptId);
 
             return View(subDept);
-        }
-
-        private async Task<List<SubDeptClassModel>> GetAllSubDeptClasses(int subDeptId)
-        {
-            return await SubDeptClassDb.GetAllSubDeptClassesById(_context, subDeptId);
-        }
-
-        private async Task<List<SubDeptIdModel>> GetAllSubDepartments(int id) 
-        {
-            return await SubDepartmentDb.GetAllSubDepartmentsById(_context, id);
-        }
-
-        private async Task<SubDeptIdModel> GetSubDepartment(int id)
-        {
-            return await SubDepartmentDb.GetSubDepartmentById(_context, id);
         }
 
         [HttpGet]
