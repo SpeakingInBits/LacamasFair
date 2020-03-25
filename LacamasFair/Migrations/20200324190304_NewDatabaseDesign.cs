@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace LacamasFair.Data.Migrations
+namespace LacamasFair.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class NewDatabaseDesign : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,11 +47,24 @@ namespace LacamasFair.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Departments",
+                columns: table => new
+                {
+                    DepartmentId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DepartmentName = table.Column<string>(maxLength: 75, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Departments", x => x.DepartmentId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -73,7 +85,7 @@ namespace LacamasFair.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -153,6 +165,66 @@ namespace LacamasFair.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SubDepartments",
+                columns: table => new
+                {
+                    SubDeptId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DepartmentId = table.Column<int>(nullable: false),
+                    SubDeptName = table.Column<string>(maxLength: 60, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubDepartments", x => x.SubDeptId);
+                    table.ForeignKey(
+                        name: "FK_SubDepartments_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "DepartmentId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EntryForms",
+                columns: table => new
+                {
+                    SubDeptId = table.Column<int>(nullable: false),
+                    EntryFormId = table.Column<int>(nullable: false),
+                    FormFile = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EntryForms", x => x.SubDeptId);
+                    table.ForeignKey(
+                        name: "FK_EntryForms_SubDepartments_SubDeptId",
+                        column: x => x.SubDeptId,
+                        principalTable: "SubDepartments",
+                        principalColumn: "SubDeptId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubDepartmentClasses",
+                columns: table => new
+                {
+                    ClassId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SubDeptId = table.Column<int>(nullable: false),
+                    ClassName = table.Column<string>(maxLength: 750, nullable: true),
+                    ClassRules = table.Column<string>(maxLength: 1000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubDepartmentClasses", x => x.ClassId);
+                    table.ForeignKey(
+                        name: "FK_SubDepartmentClasses_SubDepartments_SubDeptId",
+                        column: x => x.SubDeptId,
+                        principalTable: "SubDepartments",
+                        principalColumn: "SubDeptId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +263,16 @@ namespace LacamasFair.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubDepartmentClasses_SubDeptId",
+                table: "SubDepartmentClasses",
+                column: "SubDeptId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubDepartments_DepartmentId",
+                table: "SubDepartments",
+                column: "DepartmentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,10 +293,22 @@ namespace LacamasFair.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "EntryForms");
+
+            migrationBuilder.DropTable(
+                name: "SubDepartmentClasses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "SubDepartments");
+
+            migrationBuilder.DropTable(
+                name: "Departments");
         }
     }
 }

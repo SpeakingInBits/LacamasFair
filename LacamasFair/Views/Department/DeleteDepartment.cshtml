@@ -1,0 +1,33 @@
+﻿@model LacamasFair.Models.DepartmentModel
+
+@{
+    ViewData["Title"] = "DeleteDepartment";
+    Layout = "/Views/Shared/_FairbookLayout.cshtml";
+}
+
+<h1>Delete @Model.DepartmentName</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DepartmentId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DepartmentId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DepartmentName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DepartmentName)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteDepartment">
+        <input type="hidden" value="@Model.DepartmentId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Home">Back To Department Home</a>
+    </form>
+</div>

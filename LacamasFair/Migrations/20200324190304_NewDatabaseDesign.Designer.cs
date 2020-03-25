@@ -4,14 +4,16 @@ using LacamasFair.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace LacamasFair.Data.Migrations
+namespace LacamasFair.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200324190304_NewDatabaseDesign")]
+    partial class NewDatabaseDesign
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,6 +55,31 @@ namespace LacamasFair.Data.Migrations
                     b.ToTable("EntryForms");
                 });
 
+            modelBuilder.Entity("LacamasFair.Models.SubDeptClassModel", b =>
+                {
+                    b.Property<int>("ClassId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClassName")
+                        .HasColumnType("nvarchar(750)")
+                        .HasMaxLength(750);
+
+                    b.Property<string>("ClassRules")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<int>("SubDeptId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClassId");
+
+                    b.HasIndex("SubDeptId");
+
+                    b.ToTable("SubDepartmentClasses");
+                });
+
             modelBuilder.Entity("LacamasFair.Models.SubDeptIdModel", b =>
                 {
                     b.Property<int>("SubDeptId")
@@ -63,15 +90,8 @@ namespace LacamasFair.Data.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DeptClasses")
-                        .HasColumnType("int")
-                        .HasMaxLength(750);
-
-                    b.Property<string>("FairEntryRules")
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
                     b.Property<string>("SubDeptName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(60)")
                         .HasMaxLength(60);
 
@@ -283,6 +303,15 @@ namespace LacamasFair.Data.Migrations
                 });
 
             modelBuilder.Entity("LacamasFair.Models.EntryFormModel", b =>
+                {
+                    b.HasOne("LacamasFair.Models.SubDeptIdModel", null)
+                        .WithMany()
+                        .HasForeignKey("SubDeptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LacamasFair.Models.SubDeptClassModel", b =>
                 {
                     b.HasOne("LacamasFair.Models.SubDeptIdModel", null)
                         .WithMany()

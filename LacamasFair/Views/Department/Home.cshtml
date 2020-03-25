@@ -1,7 +1,10 @@
-﻿
+﻿@model DepartmentModel
+
 @{
     ViewData["Title"] = "Home";
     Layout = "/Views/Shared/_FairbookLayout.cshtml";
+
+    bool isAdmin = User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator);
 }
 
 @if (TempData["Message"] != null)
@@ -12,14 +15,34 @@
     </div>
 }
 
-<div class="text-center">
-    <h1>Welcome To Departments</h1>
-</div>
-
-@* If the user that is signed in is an admin, display an add link for them to be able to add departments to the database *@
-@if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator))
+@* Viewable by Admin only *@
+@if (isAdmin == true)
 {
-    <a asp-action="AddDepartment" asp-controller="Department">Add Department</a>
+    @await Html.PartialAsync("_AdminControl", Model)
 }
 
-@* TODO: Display the correct information based what department is clicked on in the nav-link *@
+<div class="text-center">
+    <h1>Welcome To @ViewData["DepartmentName"] Department</h1>
+</div>
+
+@* If one of the departments are clicked, show its sub departments *@
+@if ((int)ViewData["id"] > 0)
+{
+    <div class="card-deck" style="margin-top: 10%;">
+        @foreach (SubDeptIdModel item in ViewBag.SubDepartments)
+        {
+            //If the user clicks a department in the nav link, only show the sub departments tied to it
+            @if (Model.DepartmentId == item.DepartmentId)
+            {
+                <div class="card">
+                    <div class="card-body background-dark">
+                        <div class="text-center">
+                            @*Link to view the sub department*@
+                            <a class="card-text" asp-action="SubDepartment" asp-controller="Department" asp-route-id="@item.SubDeptId">@item.SubDeptName</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+     </div>
+}
