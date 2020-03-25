@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Home";
     Layout = "/Views/Shared/_FairbookLayout.cshtml";
+
+    bool isAdmin = User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator);
 }
 
 @if (TempData["Message"] != null)
@@ -14,7 +16,7 @@
 }
 
 @* Viewable by Admin only *@
-@if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator))
+@if (isAdmin == true)
 {
     @await Html.PartialAsync("_AdminControl", Model)
 }

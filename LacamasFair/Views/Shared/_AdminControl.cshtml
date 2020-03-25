@@ -3,10 +3,12 @@
 @inject ApplicationDbContext context
 @{
     List<DepartmentModel> departments = await DepartmentDb.GetAllDepartments(context);
+
+    bool isAdmin = User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator);
 }
 
 @* If the user that is signed in is an admin, display an add/edit link for them to be able to add/edit departments to the database *@
-@if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator) && (int)ViewData["id"] == 0)
+@if (isAdmin == true && (int)ViewData["id"] == 0)
 {
     <div class="btn-toolbar" style="margin-left: 27%">
         @* Link to add a department to the nav-bar *@
@@ -41,7 +43,7 @@
 }
 
 @* If the user clicks on a department, display a delete department and add sub department link for them *@
-@if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator) && (int)ViewData["id"] > 0)
+@if (isAdmin == true && (int)ViewData["id"] > 0)
 {
 <div class="btn-toolbar" style="margin-left: 22%">
     <a class="btn btn-primary btn-group mr-2 text-dark" asp-action="AddSubDepartment" asp-controller="Department" asp-route-id="@Model.DepartmentId">Add Sub Department</a>

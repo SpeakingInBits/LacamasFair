@@ -3,9 +3,11 @@
 @{
     ViewData["Title"] = "SubDepartment";
     Layout = "/Views/Shared/_FairbookLayout.cshtml";
+
+    bool isAdmin = User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator);
 }
 
-@if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator))
+@if (isAdmin == true)
 {
     <div class="text-center">
         <a class="btn btn-primary mr-2 text-dark" asp-action="AddSubDeptClass" asp-controller="Department" asp-route-id="@Model.SubDeptId">Add Sub Department Class</a>
@@ -27,7 +29,7 @@
                         @item.ClassName
                     </button>
 
-                    @if (User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator))
+                    @if (isAdmin == true)
                     { 
                         <a class="btn btn-success text-dark" asp-action="EditSubDeptClass" asp-controller="Department" 
                            asp-route-classId="@item.ClassId" asp-route-subDeptId="@item.SubDeptId">
