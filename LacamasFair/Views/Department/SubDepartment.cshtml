@@ -5,6 +5,8 @@
     Layout = "/Views/Shared/_FairbookLayout.cshtml";
 
     bool isAdmin = User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator);
+
+    int index = 0;
 }
 
 @if (isAdmin == true)
@@ -23,9 +25,9 @@
     @foreach (SubDeptClassModel item in ViewBag.SubDepartmentClasses)
     {
         <div class="card">
-            <div class="card-header" id="heading">
+            <div class="card-header" id="heading_@index">
                 <h2 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="true" aria-controls="collapse">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_@index" aria-expanded="false" aria-controls="collapse_@index">
                         @item.ClassName
                     </button>
 
@@ -39,12 +41,14 @@
                     }
                 </h2>
             </div>
-            <div id="collapse" class="collapse show" aria-labelledby="heading" data-parent="#departmentClasses">
+            <div id="collapse_@index" class="collapse" aria-labelledby="heading_@index" data-parent="#departmentClasses">
                 <div class="card-body text-dark">
                     @item.ClassRules
                 </div>
             </div>
         </div>
+
+        index++;
     }
 </div>
 
