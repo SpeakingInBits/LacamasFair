@@ -9,6 +9,14 @@
     int index = 0;
 }
 
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        @TempData["Message"]
+    </div>
+}
+
 @if (isAdmin == true)
 {
     <div class="text-center">
@@ -32,8 +40,8 @@
                     </button>
 
                     @if (isAdmin == true)
-                    { 
-                        <a class="btn btn-success text-dark" asp-action="EditSubDeptClass" asp-controller="Department" 
+                    {
+                        <a class="btn btn-success text-dark" asp-action="EditSubDeptClass" asp-controller="Department"
                            asp-route-classId="@item.ClassId" asp-route-subDeptId="@item.SubDeptId">
                             Edit class
                         </a>
