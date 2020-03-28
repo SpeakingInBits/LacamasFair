@@ -26,14 +26,14 @@ namespace LacamasFair.Models
         /// (For example, the baking sub department has pies, cookies, etc classes)
         /// </summary>
         [StringLength(750)]
-        [Display(Name = "Class Name")]
+        [Display(Name = "Title")]
         public string ClassName { get; set; }
 
         /// <summary>
         /// Entry rules for that class
         /// </summary>
         [StringLength(1000)]
-        [Display(Name = "Class Rules")]
+        [Display(Name = "Details")]
         public string ClassRules { get; set; }
     }
 }
