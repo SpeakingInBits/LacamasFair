@@ -21,6 +21,7 @@
     @await Html.PartialAsync("_AdminControl", Model)
 }
 
+@* This displays the Department's home page *@
 @if ((int)ViewData["id"] == 0)
 {
     <div class="text-center">
@@ -32,6 +33,17 @@
     <div class="text-center">
         @* Image place holder for departments *@
         <img src="https://via.placeholder.com/350" />
+    </div>
+    <br />
+    <br />
+
+    <div class="text-center">
+        <p>Click on any of the buttons below to download the PDFs</p>
+
+        <a class="btn btn-primary text-white" title="Fairbook" target="_blank" href="~/PDFs/FairBook.pdf">Fairbook PDF</a>
+        <a class="btn btn-success text-white" title="GeneralEntryForm" target="_blank" href="~/PDFs/GeneralEntryForm.pdf">General Entry Form PDF</a>
+        <a class="btn btn-info text-white" title="HorseEntryForm" target="_blank" href="~/PDFs/HorseEntryForm.pdf">Horse Entry Form PDF</a>
+        <a class="btn btn-warning text-dark" title="HorseShowReleaseForm" target="_blank" href="~/PDFs/HorseShowReleaseForm.pdf">Horse Show Release Form PDF</a>
     </div>
 }
 
