@@ -20,7 +20,7 @@
 @if (isAdmin == true)
 {
     <div class="text-center">
-        <a class="btn btn-primary mr-2 text-dark" asp-action="AddSubDeptClass" asp-controller="Department" asp-route-id="@Model.SubDeptId">Add Sub Department Class</a>
+        <a class="btn btn-primary mr-2 text-dark" asp-action="AddSubDeptClass" asp-controller="Department" asp-route-id="@Model.SubDeptId">Add Sub Department Information</a>
     </div>
 }
 
@@ -43,9 +43,9 @@
                     {
                         <a class="btn btn-success text-dark" asp-action="EditSubDeptClass" asp-controller="Department"
                            asp-route-classId="@item.ClassId" asp-route-subDeptId="@item.SubDeptId">
-                            Edit class
+                            Edit
                         </a>
-                        <a class="btn btn-danger text-dark" asp-action="DeleteSubDeptClass" asp-controller="Department" asp-route-id="@item.ClassId">Delete class</a>
+                        <a class="btn btn-danger text-dark" asp-action="DeleteSubDeptClass" asp-controller="Department" asp-route-id="@item.ClassId">Delete</a>
                     }
                 </h2>
             </div>
