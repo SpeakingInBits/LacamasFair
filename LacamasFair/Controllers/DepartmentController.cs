@@ -55,7 +55,7 @@ namespace LacamasFair.Controllers
             if(ModelState.IsValid)
             {
                 await DepartmentDb.AddDepartment(_context, department);
-                TempData["Message"] = $"{department.DepartmentName} department added successfully";
+                TempData["Message"] = $"{department.DepartmentName} Department added successfully";
                 return RedirectToAction(nameof(Home));
             }
             return View();
@@ -84,7 +84,7 @@ namespace LacamasFair.Controllers
             if (ModelState.IsValid) 
             {
                 await DepartmentDb.UpdateDepartment(_context, department);
-                TempData["Message"] = $"{department.DepartmentName} edited successfully";
+                TempData["Message"] = $"{department.DepartmentName} Department edited successfully";
                 return RedirectToAction(nameof(Home));
             }
             return View(department);
@@ -106,7 +106,7 @@ namespace LacamasFair.Controllers
         {
             DepartmentModel department = await DepartmentDb.GetDepartmentById(_context, id);
             await DepartmentDb.DeleteDepartment(_context, department);
-            TempData["Message"] = $"{department.DepartmentName} department deleted successfully";
+            TempData["Message"] = $"{department.DepartmentName} Department deleted successfully";
             return RedirectToAction(nameof(Home));
         }
 
@@ -131,13 +131,13 @@ namespace LacamasFair.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddSubDepartment(SubDeptIdModel subDepartment)
+        public async Task<IActionResult> AddSubDepartment(SubDeptIdModel subDepartment, int id)
         {
             if (ModelState.IsValid)
             {
                 await SubDepartmentDb.AddSubDepartment(_context, subDepartment);
                 TempData["Message"] = $"{subDepartment.SubDeptName} sub department added successfully";
-                return RedirectToAction(nameof(Home));
+                return Redirect($"/Department/Home/{id}");
             }
             return View();
         }
@@ -146,17 +146,18 @@ namespace LacamasFair.Controllers
         public async Task<IActionResult> EditSubDepartment(int id) 
         {
             SubDeptIdModel subDept = await SubDepartmentDb.GetSubDepartmentById(_context, id);
+            ViewData["id"] = subDept.DepartmentId;
             return View(subDept);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditSubDepartment(SubDeptIdModel subDepartment) 
+        public async Task<IActionResult> EditSubDepartment(SubDeptIdModel subDepartment, int id) 
         {
             if (ModelState.IsValid) 
             {
                 await SubDepartmentDb.UpdateSubDepartment(_context, subDepartment);
-                TempData["Message"] = $"{subDepartment.SubDeptName} edited successfully";
-                return RedirectToAction(nameof(Home));
+                TempData["Message"] = $"{subDepartment.SubDeptName} sub department edited successfully";
+                return Redirect($"/Department/Home/{id}");
             }
             return View();
         }
@@ -165,6 +166,7 @@ namespace LacamasFair.Controllers
         public async Task<IActionResult> DeleteSubDepartment(int id) 
         {
             SubDeptIdModel subDepartment = await SubDepartmentDb.GetSubDepartmentById(_context, id);
+            ViewData["id"] = subDepartment.DepartmentId;
             if (subDepartment == null) 
             {
                 return NotFound();
@@ -173,12 +175,12 @@ namespace LacamasFair.Controllers
         }
 
         [HttpPost, ActionName("DeleteSubDepartment")]
-        public async Task<IActionResult> DeleteSubDepartmentConfirmed(int id) 
+        public async Task<IActionResult> DeleteSubDepartmentConfirmed(int id, int deptId) 
         {
             SubDeptIdModel subDepartment = await SubDepartmentDb.GetSubDepartmentById(_context, id);
             await SubDepartmentDb.DeleteSubDepartmentById(_context, subDepartment);
             TempData["Message"] = $"{subDepartment.SubDeptName} sub department deleted successfully";
-            return RedirectToAction(nameof(Home));
+            return Redirect($"/Department/Home/{deptId}");
         }
 
         [HttpGet]
@@ -189,13 +191,13 @@ namespace LacamasFair.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddSubDeptClass(SubDeptClassModel subDeptClass) 
+        public async Task<IActionResult> AddSubDeptClass(SubDeptClassModel subDeptClass, int id) 
         {
             if (ModelState.IsValid)
             {
                 await SubDeptClassDb.AddSubDeptClass(_context, subDeptClass);
-                TempData["Message"] = $"{subDeptClass.ClassName} sub department class added successfully";
-                return RedirectToAction(nameof(Home));
+                TempData["Message"] = "Added successfully";
+                return Redirect($"/Department/SubDepartment/{id}");
             }
             return View();
         }
@@ -210,13 +212,13 @@ namespace LacamasFair.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditSubDeptClass(SubDeptClassModel subDeptClass)
+        public async Task<IActionResult> EditSubDeptClass(SubDeptClassModel subDeptClass, int id)
         {
             if (ModelState.IsValid)
             {
                 await SubDeptClassDb.UpdateSubDeptClass(_context, subDeptClass);
-                TempData["Message"] = "Class entry rule added successfully";
-                return RedirectToAction(nameof(Home));
+                TempData["Message"] = "Edited successfully";
+                return Redirect($"/Department/SubDepartment/{id}");
             }
             return View();
         }
@@ -225,16 +227,17 @@ namespace LacamasFair.Controllers
         public async Task<IActionResult> DeleteSubDeptClass(int id)
         {
             SubDeptClassModel subDeptClass = await SubDeptClassDb.GetSubDeptClassById(_context, id);
+            ViewData["SubDeptId"] = subDeptClass.SubDeptId;
             return View(subDeptClass);
         }
 
         [HttpPost, ActionName("DeleteSubDeptClass")]
-        public async Task<IActionResult> DeleteSubDeptClassConfirmed(int id)
+        public async Task<IActionResult> DeleteSubDeptClassConfirmed(int id, int subDeptId)
         {
             SubDeptClassModel subDepartment = await SubDeptClassDb.GetSubDeptClassById(_context, id);
             await SubDeptClassDb.DeleteSubDeptClass(_context, subDepartment);
-            TempData["Message"] = $"{subDepartment.ClassName} sub department class deleted successfully";
-            return RedirectToAction(nameof(Home));
+            TempData["Message"] = "Deleted successfully";
+            return Redirect($"/Department/SubDepartment/{subDeptId}");
         }
     }
 }

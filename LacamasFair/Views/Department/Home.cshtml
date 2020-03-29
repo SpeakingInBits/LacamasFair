@@ -21,20 +21,52 @@
     @await Html.PartialAsync("_AdminControl", Model)
 }
 
-<div class="text-center">
-    <h1>Welcome To @ViewData["DepartmentName"] Department</h1>
-</div>
+@* This displays the Department's home page *@
+@if ((int)ViewData["id"] == 0)
+{
+    <div class="text-center">
+        <h1>Welcome to Departments</h1>
+        <p>Click on any of the links above to view their specific department!</p>
+    </div>
+    <br />
+
+    <div class="text-center">
+        @* Image place holder for departments *@
+        <img src="https://via.placeholder.com/350" />
+    </div>
+    <br />
+    <br />
+
+    <div class="text-center">
+        <p>Click on any of the buttons below to download the PDFs</p>
+
+        <a class="btn btn-primary text-white" title="Fairbook" target="_blank" href="~/PDFs/FairBook.pdf">Fairbook PDF</a>
+        <a class="btn btn-success text-white" title="GeneralEntryForm" target="_blank" href="~/PDFs/GeneralEntryForm.pdf">General Entry Form PDF</a>
+        <a class="btn btn-info text-white" title="HorseEntryForm" target="_blank" href="~/PDFs/HorseEntryForm.pdf">Horse Entry Form PDF</a>
+        <a class="btn btn-warning text-dark" title="HorseShowReleaseForm" target="_blank" href="~/PDFs/HorseShowReleaseForm.pdf">Horse Show Release Form PDF</a>
+    </div>
+}
 
 @* If one of the departments are clicked, show its sub departments *@
 @if ((int)ViewData["id"] > 0)
 {
-    <div class="card-deck" style="margin-top: 10%;">
+    <div class="text-center">
+        <h1>@ViewData["DepartmentName"] Department</h1>
+    </div>
+
+    <div class="text-center">
+        @* Image place holder for departments *@
+        <img src="https://via.placeholder.com/350" />
+    </div>
+    <br />
+
+    <div class="row row-cols-1 row-cols-md-4" style="margin-left: 8%;">
         @foreach (SubDeptIdModel item in ViewBag.SubDepartments)
         {
             //If the user clicks a department in the nav link, only show the sub departments tied to it
             @if (Model.DepartmentId == item.DepartmentId)
             {
-                <div class="card">
+                <div class="card text-center" style="width: 15rem; margin-left: 3rem;">
                     <div class="card-body background-dark">
                         <div class="text-center">
                             @*Link to view the sub department*@
@@ -44,5 +76,5 @@
                 </div>
             }
         }
-     </div>
+    </div>
 }

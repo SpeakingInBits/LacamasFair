@@ -12,8 +12,8 @@
     <div class="col-md-4">
         <form asp-action="EditSubDeptClass">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="ClassId" class="form-control" value="@ViewData["ClassId"]" />
-                <input type="hidden" asp-for="SubDeptId" class="form-control" value="@ViewData["SubDeptId"]" />
+            <input type="hidden" asp-for="ClassId" class="form-control" value="@ViewData["ClassId"]" />
+            <input type="hidden" asp-for="SubDeptId" class="form-control" value="@ViewData["SubDeptId"]" />
             <div class="form-group">
                 <label asp-for="ClassName" class="control-label"></label>
                 <input asp-for="ClassName" class="form-control" value="@Model.ClassName" />
@@ -21,11 +21,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="ClassRules" class="control-label"></label>
-                <input asp-for="ClassRules" class="form-control" value="@Model.ClassRules" />
+                <textarea asp-for="ClassRules" class="form-control" value="@Model.ClassRules"></textarea>
                 <span asp-validation-for="ClassRules" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Edit" class="btn btn-primary" /> |
+                <input type="submit" value="Edit" class="btn btn-primary" asp-route-id="@ViewData["SubDeptId"]"/> |
                 <a asp-action="Home">Back To Department Home</a>
             </div>
         </form>
