@@ -83,13 +83,28 @@ namespace LacamasFair.Controllers
         [HttpGet]
         public async Task<IActionResult> EditBoardMember(int? id) 
         {
-            throw new NotImplementedException();
+            if (id == null) 
+            {
+                return BadRequest();
+            }
+            BoardMember member = await BoardMemberDb.GetBoardMemberById(_context, id.Value);
+            if (member == null) 
+            {
+                return NotFound();
+            }
+            return View(member);
         }
 
         [HttpPost]
         public async Task<IActionResult> EditBoardMember(BoardMember member) 
         {
-            throw new NotImplementedException();
+            if (ModelState.IsValid) 
+            {
+                await BoardMemberDb.UpdateBoardMember(_context, member);
+                TempData["Message"] = $"{member.Name} edited successfully";
+                return RedirectToAction(nameof(FairBoard));
+            }
+            return View();
         }
 
         [HttpGet]
