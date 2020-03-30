@@ -110,13 +110,21 @@ namespace LacamasFair.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteBoardMember(int id)
         {
-            throw new NotImplementedException();
+            BoardMember member = await BoardMemberDb.GetBoardMemberById(_context, id);
+            if (member == null) 
+            {
+                return NotFound();
+            }
+            return View(member);
         }
 
         [HttpPost, ActionName("DeleteBoardMember")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            throw new NotImplementedException();
+            BoardMember member = await BoardMemberDb.GetBoardMemberById(_context, id);
+            await BoardMemberDb.DeleteBoardMember(_context, member);
+            TempData["Message"] = $"{member.Name} deleted successfully";
+            return RedirectToAction(nameof(FairBoard));
         }
 
         [AllowAnonymous]
