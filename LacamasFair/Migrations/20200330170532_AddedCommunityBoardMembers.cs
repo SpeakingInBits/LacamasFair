@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LacamasFair.Migrations
 {
-    public partial class NewDatabaseDesign : Migration
+    public partial class AddedCommunityBoardMembers : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,22 @@ namespace LacamasFair.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BoardMembers",
+                columns: table => new
+                {
+                    BoardMemberId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(maxLength: 100, nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    PhoneNumber = table.Column<string>(maxLength: 25, nullable: false),
+                    FairOrClubOfficer = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BoardMembers", x => x.BoardMemberId);
                 });
 
             migrationBuilder.CreateTable(
@@ -291,6 +307,9 @@ namespace LacamasFair.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "BoardMembers");
 
             migrationBuilder.DropTable(
                 name: "EntryForms");
