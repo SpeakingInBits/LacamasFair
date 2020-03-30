@@ -1,0 +1,47 @@
+﻿@model BoardMember
+
+@{
+    ViewData["Title"] = "AddBoardMember";
+}
+
+<h1>Add Board Member</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddBoardMember">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FairOrClubOfficer" class="control-label"></label>
+                <select asp-for="FairOrClubOfficer" class="form-control">
+                    <option class="text-dark" value="Club Officer">Club Officer</option>
+                    <option class="text-dark" value="Fair Officer">Fair Officer</option>
+                </select>
+                <span asp-validation-for="FairOrClubOfficer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" /> |
+                <a asp-action="FairBoard">Back ToFair Board</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
