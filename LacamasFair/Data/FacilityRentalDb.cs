@@ -10,7 +10,7 @@ namespace LacamasFair.Data
     public class FacilityRentalDb
     {
         /// <summary>
-        /// Gets all of the facility rentals out of the database
+        /// Gets all of the facility rental items out of the database
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -23,7 +23,7 @@ namespace LacamasFair.Data
         }
 
         /// <summary>
-        /// Gets a single facility rental by id
+        /// Gets a single facility rental item by id
         /// </summary>
         /// <param name="context"></param>
         /// <param name="id"></param>
@@ -37,7 +37,7 @@ namespace LacamasFair.Data
         }
 
         /// <summary>
-        /// Adds a new facility rental to the database
+        /// Adds a new facility rental item to the database
         /// </summary>
         /// <param name="context"></param>
         /// <param name="facility"></param>
@@ -50,7 +50,7 @@ namespace LacamasFair.Data
         }
 
         /// <summary>
-        /// Updates an existing facility rental from the database
+        /// Updates an existing facility rental item from the database
         /// </summary>
         /// <param name="context"></param>
         /// <param name="facility"></param>
@@ -64,7 +64,7 @@ namespace LacamasFair.Data
         }
 
         /// <summary>
-        /// Deletes a selected facility rental from the database
+        /// Deletes a selected facility rental item from the database
         /// </summary>
         /// <param name="context"></param>
         /// <param name="facility"></param>
