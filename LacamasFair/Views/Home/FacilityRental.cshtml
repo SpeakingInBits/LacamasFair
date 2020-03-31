@@ -1,43 +1,62 @@
-﻿
+﻿@model FacilityRental
+
 @{
     ViewData["Title"] = "FacilityRental";
+
+    bool isAdmin = User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator);
 }
 
-    <div class="text-center">
-        <h1>Facility Rental Menu</h1>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        @TempData["Message"]
     </div>
-	<br />
+}
 
+@if (isAdmin == true)
+{
     <div class="text-center">
-        <h5 class="btn btn-info disabled">Facility Rentals</h5>
+        <a class="btn btn-primary text-dark" asp-action="AddFacilityRental" asp-controller="Home">Add a Facility Rental</a>
     </div>
+}
 
-    <div class="text-center">
-		<h6>For more information, or to check availability, please contact Ricky Hoskins at 253-278-0336</h6>
-        <h6>Please email <a href="mailto:LacamasFair@gmail.com">LacamasFair@gmail.com</a> for any other questions.</h6>
-    </div>
+<div class="text-center">
+    <h1>Facility Rental Menu</h1>
+</div>
+<br />
 
+<div class="text-center">
+    <h6>For more information, or to check availability, please contact Ricky Hoskins at 253-278-0336</h6>
+    <h6>Please email <a href="mailto:LacamasFair@gmail.com">LacamasFair@gmail.com</a> for any other questions.</h6>
+</div>
 
 <table class="table table-sm table-striped table-bordered">
     <thead class="text-center thead-dark">
         <tr>
             <th class="accent" scope="col">Facility</th>
-            <th class="accent" scope="col">Price/Price</th>
+            <th class="accent" scope="col">Price</th>
+            @if (isAdmin == true)
+            {
+                <th class="accent" scope="col">Edit/Delete</th>
+            }
         </tr>
     </thead>
     <tbody class="text-center text-white">
-        <tr>
-            <th scope="row">Rental Fee</th>
-            <th scope="row">$425</th>
-        </tr>
-        <tr>
-            <th scope="row">Kitchen Use</th>
-            <th scope="row">$50</th>
-        </tr>
-        <tr>
-            <th scope="row">Damage Deposit</th>
-            <th scope="row">$500</th>
-        </tr>
+        @foreach (FacilityRental item in ViewBag.Facility)
+        {
+            <tr>
+                <th scope="row">@item.FacilityName</th>
+                <th scope="row">@item.Price</th>
+                @if (isAdmin == true)
+                {
+                    <th scope="row">
+                        <a class="btn btn-success text-dark" asp-action="EditFacilityRental" asp-route-id="@item.FacilityId">Edit</a>
+                        <a class="btn btn-danger text-dark" asp-action="DeleteFacilityRental" asp-route-id="@item.FacilityId">Delete</a>
+                    </th>
+                }
+            </tr>
+        }
     </tbody>
 </table>
 
