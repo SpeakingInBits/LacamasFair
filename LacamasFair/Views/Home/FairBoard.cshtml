@@ -1,88 +1,99 @@
-﻿
+﻿@model BoardMember
+
 @{
     ViewData["Title"] = "Fair Board";
+
+    bool isAdmin = User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator);
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        @TempData["Message"]
+    </div>
 }
 
 <div class="text-center">
     <a asp-action="HistoryAndGoal" asp-controller="Home">History and Goal</a>
 </div>
 <br />
+
+@if (isAdmin == true)
+{
+    <div class="text-center">
+        <a class="btn btn-primary text-white" asp-action="AddBoardMember" asp-controller="Home">Add Board Member</a>
+    </div>
+}
+
 <div class="text-center">
     <h1>Board Members</h1>
 </div>
-
 <br />
 
-<div class="text-center">
-    <h5 class="btn btn-info disabled">Community Club Officers</h5>
-</div>
+<h5 class="btn btn-info disabled">Community Club Officers</h5>
 
-<table class="table table-hover">
+<table class="table">
     <thead class="text-center thead-dark">
         <tr>
             <th class="accent" scope="col">Title</th>
             <th class="accent" scope="col">Name</th>
             <th class="accent" scope="col">Contact Number</th>
+            @if (isAdmin == true)
+            {
+                <th class="accent" scope="col">Edit/Delete</th>
+            }
         </tr>
     </thead>
     <tbody class="text-center text-white">
-        <tr>
-            <th scope="row">President</th>
-            <td>Ricky Hoskins</td>
-            <td>253-278-0336</td>
-        </tr>
-        <tr>
-            <th scope="row">Vice President</th>
-            <td>Kimberly Herring</td>
-            <td>253-307-5517</td>
-        </tr>
-        <tr>
-            <th scope="row">Secretary</th>
-            <td>Holly Wood</td>
-            <td>253-843-1566</td>
-        </tr>
-        <tr>
-            <th scope="row">Treasurer</th>
-            <td>Bridget Holt</td>
-            <td>360-480-7066</td>
-        </tr>
+        @foreach (BoardMember item in ViewBag.ClubOfficers)
+        {
+            <tr>
+                <th scope="row">@item.Title</th>
+                <td>@item.Name</td>
+                <td>@item.PhoneNumber</td>
+                @if (isAdmin == true)
+                {
+                    <td>
+                        <a class="btn btn-success text-white" asp-action="EditBoardMember" asp-route-id="@item.BoardMemberId">Edit</a>
+                        <a class="btn btn-danger text-white" asp-action="DeleteBoardMember" asp-route-id="@item.BoardMemberId">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
     </tbody>
 </table>
-
 <br />
 
-<div class="text-center">
-    <h5 class="btn btn-info disabled">Community Fair Officers</h5>
-</div>
+<h5 class="btn btn-info disabled">Community Fair Officers</h5>
 
-<table class="table table-hover">
+<table class="table">
     <thead class="text-center thead-dark">
         <tr>
             <th class="accent" scope="col">Title</th>
             <th class="accent" scope="col">Name</th>
             <th class="accent" scope="col">Contact Number</th>
+            @if (isAdmin == true)
+            {
+                <th class="accent" scope="col">Edit/Delete</th>
+            }
         </tr>
     </thead>
     <tbody class="text-center text-white">
+        @foreach (BoardMember item in ViewBag.FairOfficers)
+        {
         <tr>
-            <th scope="row">Manager</th>
-            <td>Holly Wood</td>
-            <td>253-843-1566</td>
+            <th scope="row">@item.Title</th>
+            <td>@item.Name</td>
+            <td>@item.PhoneNumber</td>
+            @if (isAdmin == true)
+            {
+                <td>
+                    <a class="btn btn-success text-white" asp-action="EditBoardMember" asp-route-id="@item.BoardMemberId">Edit</a>
+                    <a class="btn btn-danger text-white" asp-action="DeleteBoardMember" asp-route-id="@item.BoardMemberId">Delete</a>
+                </td>
+            }
         </tr>
-        <tr>
-            <th scope="row">Secretary</th>
-            <td>Dee Wood</td>
-            <td>253-843-1352</td>
-        </tr>
-        <tr>
-            <th scope="row">Grounds Maint.</th>
-            <td>Club Scout Pack 643</td>
-            <td>360-539-6121</td>
-        </tr>
-        <tr>
-            <th scope="row">Rope Bridge</th>
-            <td>Boy Scout Troup 643</td>
-            <td>253-843-2419</td>
-        </tr>
+        }
     </tbody>
 </table>
