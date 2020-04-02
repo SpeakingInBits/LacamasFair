@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200401141848_AddedFacilityRentals.cs" />
+    <Compile Remove="Migrations\20200401141848_AddedFacilityRentals.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="wwwroot\JQueryMobile\jquery.min.js" />
     <None Remove="wwwroot\JQueryMobile\jquery.min.map" />
   </ItemGroup>

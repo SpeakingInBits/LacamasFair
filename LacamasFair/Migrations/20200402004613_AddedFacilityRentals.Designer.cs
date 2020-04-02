@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LacamasFair.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200401141848_AddedFacilityRentals")]
+    [Migration("20200402004613_AddedFacilityRentals")]
     partial class AddedFacilityRentals
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
