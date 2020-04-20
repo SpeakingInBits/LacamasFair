@@ -96,10 +96,8 @@ namespace LacamasFair.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("Price")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.HasKey("FacilityId");
 

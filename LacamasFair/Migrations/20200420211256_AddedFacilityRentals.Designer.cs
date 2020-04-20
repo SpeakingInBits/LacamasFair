@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LacamasFair.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200402004613_AddedFacilityRentals")]
+    [Migration("20200420211256_AddedFacilityRentals")]
     partial class AddedFacilityRentals
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,10 +98,8 @@ namespace LacamasFair.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("Price")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.HasKey("FacilityId");
 

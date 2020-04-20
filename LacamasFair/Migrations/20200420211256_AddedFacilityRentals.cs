@@ -13,7 +13,7 @@ namespace LacamasFair.Migrations
                     FacilityId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FacilityName = table.Column<string>(maxLength: 50, nullable: false),
-                    Price = table.Column<string>(maxLength: 15, nullable: false)
+                    Price = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
