@@ -10,7 +10,7 @@ namespace LacamasFair.Data
     public class FacilityRentalDb
     {
         /// <summary>
-        /// Gets all of the facility rental items out of the database
+        /// Gets all of the facility rental items out of the database in ascending order
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -23,7 +23,7 @@ namespace LacamasFair.Data
         }
 
         /// <summary>
-        /// Gets a single facility rental item by id
+        /// Gets a single facility rental item by id, and returns null if no facility is found
         /// </summary>
         /// <param name="context"></param>
         /// <param name="id"></param>
