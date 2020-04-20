@@ -27,7 +27,7 @@ namespace LacamasFair.Models
         [Required, StringLength(1000)]
         public string Description { get; set; }
 
-        [StringLength(50)]
-        public string Date { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime? Date { get; set; }
     }
 }
