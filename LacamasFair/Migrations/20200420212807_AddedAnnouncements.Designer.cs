@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LacamasFair.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200401143118_AddedAnnouncements")]
+    [Migration("20200420212807_AddedAnnouncements")]
     partial class AddedAnnouncements
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,9 +28,8 @@ namespace LacamasFair.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Date")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
