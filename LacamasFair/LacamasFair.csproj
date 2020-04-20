@@ -8,6 +8,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200401141848_AddedFacilityRentals.cs" />
     <Compile Remove="Migrations\20200401141848_AddedFacilityRentals.Designer.cs" />
+    <Compile Remove="Migrations\20200402004613_AddedFacilityRentals.cs" />
+    <Compile Remove="Migrations\20200402004613_AddedFacilityRentals.Designer.cs" />
+    <Compile Remove="Migrations\20200420211012_AddedFacilityRentals.cs" />
+    <Compile Remove="Migrations\20200420211012_AddedFacilityRentals.Designer.cs" />
+    <Compile Remove="Migrations\20200420211156_AddedFacilityRentals.cs" />
+    <Compile Remove="Migrations\20200420211156_AddedFacilityRentals.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

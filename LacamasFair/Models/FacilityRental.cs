@@ -15,10 +15,10 @@ namespace LacamasFair.Models
         [Required]
         public int FacilityId { get; set; }
 
-        [Required, StringLength(50)]
+        [Required, StringLength(50), Display(Name = "Facility Name")]
         public string FacilityName { get; set; }
 
-        [Required, StringLength(15)]
-        public string Price { get; set; }
+        [Required, DataType(DataType.Currency)]
+        public double Price { get; set; }
     }
 }
