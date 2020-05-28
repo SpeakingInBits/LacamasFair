@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200401143118_AddedAnnouncements.cs" />
+    <Compile Remove="Migrations\20200401143118_AddedAnnouncements.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20200401141848_AddedFacilityRentals.cs" />
     <Compile Remove="Migrations\20200401141848_AddedFacilityRentals.Designer.cs" />
     <Compile Remove="Migrations\20200402004613_AddedFacilityRentals.cs" />

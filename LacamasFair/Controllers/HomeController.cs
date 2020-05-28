@@ -25,9 +25,75 @@ namespace LacamasFair.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
+        {
+            ViewBag.Announcements = await AnnouncementDb.GetAllAnnouncements(_context);
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult AddAnnouncement() 
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddAnnouncement(Announcement announcement) 
+        {
+            if (ModelState.IsValid) 
+            {
+                await AnnouncementDb.AddAnnouncement(_context, announcement);
+                TempData["Message"] = $"{announcement.Title} announcement added successfully";
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditAnnouncement(int? id) 
+        {
+            if (id == null) 
+            {
+                return BadRequest();
+            }
+            Announcement announcement = await AnnouncementDb.GetAnnouncementById(_context, id.Value);
+            if (announcement == null) 
+            {
+                return NotFound();
+            }
+            return View(announcement);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAnnouncement(Announcement announcement) 
+        {
+            if (ModelState.IsValid) 
+            {
+                await AnnouncementDb.UpdateAnnouncement(_context, announcement);
+                TempData["Message"] = $"{announcement.Title} announcement edited successfully";
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteAnnouncement(int id) 
+        {
+            Announcement announcement = await AnnouncementDb.GetAnnouncementById(_context, id);
+            if (announcement == null)
+            {
+                return NotFound();
+            }
+            return View(announcement);
+        }
+
+        [HttpPost, ActionName("DeleteAnnouncement")]
+        public async Task<IActionResult> DeleteAnnouncementConfirmed(int id) 
+        {
+            Announcement announcement = await AnnouncementDb.GetAnnouncementById(_context, id);
+            await AnnouncementDb.DeleteAnnouncement(_context, announcement);
+            TempData["Message"] = $"{announcement.Title} announcement deleted";
+            return RedirectToAction(nameof(Index));
         }
 
         [AllowAnonymous]
