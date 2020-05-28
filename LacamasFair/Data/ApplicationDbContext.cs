@@ -19,6 +19,7 @@ namespace LacamasFair.Data
         public DbSet<SubDeptClassModel> SubDepartmentClasses { get; set; }
         public DbSet<EntryFormModel> EntryForms { get; set; }
         public DbSet<BoardMember> BoardMembers { get; set; }
+        public DbSet<FacilityRental> FacilityRentals { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
