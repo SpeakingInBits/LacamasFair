@@ -1,0 +1,31 @@
+﻿@model SubDeptIdModel
+
+@{
+    ViewData["Title"] = "AddSubDepartment";
+    Layout = "/Views/Shared/_FairbookLayout.cshtml";
+}
+
+<h1>Add Sub Department</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddSubDepartment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DepartmentId" value="@ViewData["id"]" />
+            <div class="form-group">
+                <label asp-for="SubDeptName" class="control-label"></label>
+                <input asp-for="SubDeptName" class="form-control" />
+                <span asp-validation-for="SubDeptName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" asp-route-id="@ViewData["id"]" /> |
+                <a asp-action="Home">Back To Department Home</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

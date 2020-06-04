@@ -23,6 +23,21 @@ namespace LacamasFair.Data.Migrations
         }
 
         /// <summary>
+        /// Gets all the sub departments for that specific id
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static async Task<List<SubDeptIdModel>> GetAllSubDepartmentsById(ApplicationDbContext context, int id)
+        {
+            List<SubDeptIdModel> model =
+                await (from s in context.SubDepartments
+                       where s.SubDeptId == id
+                       select s).ToListAsync();
+            return model;
+        }
+
+        /// <summary>
         /// Gets the sub department out of the database with id
         /// </summary>
         /// <param name="context">The Application Context</param>
@@ -65,13 +80,10 @@ namespace LacamasFair.Data.Migrations
         /// </summary>
         /// <param name="context">The Application Context</param>
         /// <param name="subId">The SubDepartment Id</param>
-        public static async Task DeleteSubDepartmentById(ApplicationDbContext context, int subId)
+        public static async Task DeleteSubDepartmentById(ApplicationDbContext context, SubDeptIdModel subDepartment)
         {
-            SubDeptIdModel model = new SubDeptIdModel()
-            { 
-                SubDeptId = subId
-            };
-            context.Entry(model).State = EntityState.Deleted;
+            await context.AddAsync(subDepartment);
+            context.Entry(subDepartment).State = EntityState.Deleted;
             await context.SaveChangesAsync();
         }
     }

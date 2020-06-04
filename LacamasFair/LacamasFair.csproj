@@ -5,6 +5,34 @@
     <UserSecretsId>aspnet-LacamasFair-588BC50C-8F84-443E-9FA5-EED84CC696CC</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20200401143118_AddedAnnouncements.cs" />
+    <Compile Remove="Migrations\20200401143118_AddedAnnouncements.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200401141848_AddedFacilityRentals.cs" />
+    <Compile Remove="Migrations\20200401141848_AddedFacilityRentals.Designer.cs" />
+    <Compile Remove="Migrations\20200402004613_AddedFacilityRentals.cs" />
+    <Compile Remove="Migrations\20200402004613_AddedFacilityRentals.Designer.cs" />
+    <Compile Remove="Migrations\20200420211012_AddedFacilityRentals.cs" />
+    <Compile Remove="Migrations\20200420211012_AddedFacilityRentals.Designer.cs" />
+    <Compile Remove="Migrations\20200420211156_AddedFacilityRentals.cs" />
+    <Compile Remove="Migrations\20200420211156_AddedFacilityRentals.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="wwwroot\JQueryMobile\jquery.min.js" />
+    <None Remove="wwwroot\JQueryMobile\jquery.min.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\PDFs\FairBook.pdf" />
+    <None Include="wwwroot\PDFs\GeneralEntryForm.pdf" />
+    <None Include="wwwroot\PDFs\HorseEntryForm.pdf" />
+    <None Include="wwwroot\PDFs\HorseShowReleaseForm.pdf" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />

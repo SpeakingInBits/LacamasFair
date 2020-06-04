@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace LacamasFair.Data.Migrations
+namespace LacamasFair.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -18,6 +18,62 @@ namespace LacamasFair.Data.Migrations
                 .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("LacamasFair.Models.Announcement", b =>
+                {
+                    b.Property<int>("AnnouncementId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("AnnouncementId");
+
+                    b.ToTable("Announcements");
+                });
+
+            modelBuilder.Entity("LacamasFair.Models.BoardMember", b =>
+                {
+                    b.Property<int>("BoardMemberId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FairOrClubOfficer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("BoardMemberId");
+
+                    b.ToTable("BoardMembers");
+                });
 
             modelBuilder.Entity("LacamasFair.Models.DepartmentModel", b =>
                 {
@@ -53,6 +109,51 @@ namespace LacamasFair.Data.Migrations
                     b.ToTable("EntryForms");
                 });
 
+            modelBuilder.Entity("LacamasFair.Models.FacilityRental", b =>
+                {
+                    b.Property<int>("FacilityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FacilityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.HasKey("FacilityId");
+
+                    b.ToTable("FacilityRentals");
+                });
+
+            modelBuilder.Entity("LacamasFair.Models.SubDeptClassModel", b =>
+                {
+                    b.Property<int>("ClassId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClassName")
+                        .HasColumnType("nvarchar(750)")
+                        .HasMaxLength(750);
+
+                    b.Property<string>("ClassRules")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<int>("SubDeptId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClassId");
+
+                    b.HasIndex("SubDeptId");
+
+                    b.ToTable("SubDepartmentClasses");
+                });
+
             modelBuilder.Entity("LacamasFair.Models.SubDeptIdModel", b =>
                 {
                     b.Property<int>("SubDeptId")
@@ -63,15 +164,8 @@ namespace LacamasFair.Data.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DeptClasses")
-                        .HasColumnType("int")
-                        .HasMaxLength(750);
-
-                    b.Property<string>("FairEntryRules")
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
                     b.Property<string>("SubDeptName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(60)")
                         .HasMaxLength(60);
 
@@ -283,6 +377,15 @@ namespace LacamasFair.Data.Migrations
                 });
 
             modelBuilder.Entity("LacamasFair.Models.EntryFormModel", b =>
+                {
+                    b.HasOne("LacamasFair.Models.SubDeptIdModel", null)
+                        .WithMany()
+                        .HasForeignKey("SubDeptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LacamasFair.Models.SubDeptClassModel", b =>
                 {
                     b.HasOne("LacamasFair.Models.SubDeptIdModel", null)
                         .WithMany()

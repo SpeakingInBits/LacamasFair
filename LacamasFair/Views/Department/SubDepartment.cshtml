@@ -1,0 +1,63 @@
+﻿@model SubDeptIdModel
+
+@{
+    ViewData["Title"] = "SubDepartment";
+    Layout = "/Views/Shared/_FairbookLayout.cshtml";
+
+    bool isAdmin = User.IsInRole(LacamasFair.Data.IdentityHelper.Administrator);
+
+    int index = 0;
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        @TempData["Message"]
+    </div>
+}
+
+@if (isAdmin == true)
+{
+    <div class="text-center">
+        <a class="btn btn-primary mr-2 text-dark" asp-action="AddSubDeptClass" asp-controller="Department" asp-route-id="@Model.SubDeptId">Add Sub Department Information</a>
+    </div>
+}
+
+<div class="text-center">
+    <h1>@Model.SubDeptName Department</h1>
+</div>
+
+@* Display that sub department's classes *@
+<div class="accordion" id="departmentClasses">
+    @foreach (SubDeptClassModel item in ViewBag.SubDepartmentClasses)
+    {
+        <div class="card">
+            <div class="card-header" id="heading_@index">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_@index" aria-expanded="false" aria-controls="collapse_@index">
+                        @item.ClassName
+                    </button>
+
+                    @if (isAdmin == true)
+                    {
+                        <a class="btn btn-success text-dark" asp-action="EditSubDeptClass" asp-controller="Department"
+                           asp-route-classId="@item.ClassId" asp-route-subDeptId="@item.SubDeptId">
+                            Edit
+                        </a>
+                        <a class="btn btn-danger text-dark" asp-action="DeleteSubDeptClass" asp-controller="Department" asp-route-id="@item.ClassId">Delete</a>
+                    }
+                </h2>
+            </div>
+            <div id="collapse_@index" class="collapse" aria-labelledby="heading_@index" data-parent="#departmentClasses">
+                <div class="card-body text-dark">
+                    @item.ClassRules
+                </div>
+            </div>
+        </div>
+
+        index++;
+    }
+</div>
+
+

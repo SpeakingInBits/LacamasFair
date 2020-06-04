@@ -1,24 +1,25 @@
-﻿@model LacamasFair.Models.DepartmentModel
+﻿@model DepartmentModel
 
 @{
-    ViewData["Title"] = "AddDepartment";
+    ViewData["Title"] = "EditDepartment";
     Layout = "/Views/Shared/_FairbookLayout.cshtml";
 }
 
-<h1>Add Department</h1>
+<h1>Edit @Model.DepartmentName</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddDepartment">
+        <form asp-action="EditDepartment">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DepartmentId" />
             <div class="form-group">
                 <label asp-for="DepartmentName" class="control-label"></label>
                 <input asp-for="DepartmentName" class="form-control" />
                 <span asp-validation-for="DepartmentName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Add" class="btn btn-primary" /> |
+                <input type="submit" value="Save" class="btn btn-primary" /> |
                 <a asp-action="Home">Back To Department Home</a>
             </div>
         </form>
